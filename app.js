@@ -7,7 +7,7 @@
 // ── CONFIGURATION ───────────────────────────────────────────────
 // Replace these values with your actual details before going live.
 const OPERION = {
-  BASE_URL: 'https://nonrhymed-elmer-chrysocarpous.ngrok-free.dev ',   // Your n8n domain
+  BASE_URL: 'http://localhost:5678/webhook/operion/demo-request',   // Your n8n domain
   SECRET:   'Operion-2026',      // Matches admin_config.netlify_webhook_secret
 
   // ── API ENDPOINTS (v2.0) ─────────────────────────────────────
