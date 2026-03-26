@@ -7,23 +7,21 @@
 // ── CONFIGURATION ───────────────────────────────────────────────
 // Replace these values with your actual details before going live.
 const OPERION = {
-  BASE_URL: 'http://localhost:5678/webhook-test/operion/demo-request',   // Your n8n domain
-  SECRET:   'Operion-2026',      // Matches admin_config.netlify_webhook_secret
-   BASE_URL: '',https://nonrhymed-elmer-chrysocarpous.ngrok-free.dev/operion/demo-request
+  BASE_URL: 'https://nonrhymed-elmer-chrysocarpous.ngrok-free.dev',
+  SECRET: 'Operion-2026',
 
-  // ── API ENDPOINTS (v2.0) ─────────────────────────────────────
   PATHS: {
-    ONBOARD:         '/webhook/operion/onboard',
-    DASHBOARD:       '/webhook/operion/dashboard',
-    TIER_CHECK:      '/webhook/operion/tier/check',
-    DEMO_REQUEST:    '/webhook/operion/demo-request',
-    HEALTH:          '/webhook/operion/health',
-    KB_ADD:          '/webhook/operion/kb/add',
-    KB_SEARCH:       '/webhook/operion/kb/search',
-    ADMIN_RECS:      '/webhook/operion/admin/recommendations',
-    MARKETPLACE:     '/webhook/operion/marketplace',
-  },
-
+    DEMO_REQUEST: '/webhook/operion/demo-request',
+    ONBOARD: '/webhook/operion/onboard',
+    DASHBOARD: '/webhook/operion/dashboard',
+    TIER_CHECK: '/webhook/operion/tier/check',
+    HEALTH: '/webhook/operion/health',
+    KB_ADD: '/webhook/operion/kb/add',
+    KB_SEARCH: '/webhook/operion/kb/search',
+    ADMIN_RECS: '/webhook/operion/admin/recommendations',
+    MARKETPLACE: '/webhook/operion/marketplace',
+  }
+};
   // ── STRIPE ───────────────────────────────────────────────────
   STRIPE: {
     PUBLISHABLE_KEY: 'pk_live_YOUR_STRIPE_PUBLISHABLE_KEY',
