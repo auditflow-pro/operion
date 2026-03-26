@@ -7,7 +7,7 @@
 // ── CONFIGURATION ───────────────────────────────────────────────
 // Replace these values with your actual details before going live.
 const OPERION = {
-  BASE_URL: 'http://localhost:5678/webhook/operion/demo-request',
+  BASE_URL: 'https://nonrhymed-elmer-chrysocarpous.ngrok-free.dev/webhook/operion/demo-request',
   SECRET: 'Operion-2026',
 
   PATHS: {
