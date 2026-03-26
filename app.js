@@ -22,21 +22,19 @@ const OPERION = {
     MARKETPLACE: '/webhook/operion/marketplace',
   },
 
-  // ── STRIPE ───────────────────────────────────────────────────
   STRIPE: {
     PUBLISHABLE_KEY: 'pk_live_YOUR_STRIPE_PUBLISHABLE_KEY',
     PRICES: {
-      TIER_1: 'price_TIER1_ID',   // £79/month — Starter
-      TIER_2: 'price_TIER2_ID',   // £149/month — Growth
-      TIER_3: 'price_TIER3_ID',   // £249/month — Scale
-      TIER_4: 'price_TIER4_ID',   // £399/month — Enterprise
+      TIER_1: 'price_TIER1_ID',
+      TIER_2: 'price_TIER2_ID',
+      TIER_3: 'price_TIER3_ID',
+      TIER_4: 'price_TIER4_ID',
     },
     BILLING_PORTAL: 'https://billing.stripe.com/p/login/YOUR_PORTAL_LINK',
     SUCCESS_URL:    '/get-started?paid=true',
     CANCEL_URL:     '/pricing',
   },
 
-  // ── TIER CONFIG ──────────────────────────────────────────────
   TIERS: {
     1: { name: 'Starter',    price: 79,  rate: '500 enquiries/hr' },
     2: { name: 'Growth',     price: 149, rate: '2,000 enquiries/hr' },
@@ -92,14 +90,12 @@ function initNav() {
   if (burger && links) {
     burger.addEventListener('click', () => links.classList.toggle('open'));
   }
-  // Highlight active page
   const path = window.location.pathname;
   $$('.nav-links a').forEach(a => {
     if (a.getAttribute('href') === path || (path === '/' && a.getAttribute('href') === 'index.html')) {
       a.classList.add('active');
     }
   });
-  // Scroll behaviour
   window.addEventListener('scroll', () => {
     const nav = $('.nav');
     if (nav) nav.classList.toggle('scrolled', window.scrollY > 20);
@@ -136,7 +132,6 @@ async function initStripe() {
     });
   });
 
-  // Billing portal button
   $$('[data-billing-portal]').forEach(btn => {
     btn.addEventListener('click', () => {
       window.location.href = OPERION.STRIPE.BILLING_PORTAL;
@@ -149,7 +144,6 @@ function initOnboardingForm() {
   const form = $('#onboarding-form');
   if (!form) return;
 
-  // FAQ builder
   let faqCount = 0;
   const faqContainer = $('#faq-container');
   const addFaqBtn = $('#add-faq');
@@ -175,7 +169,6 @@ function initOnboardingForm() {
 
   if (addFaqBtn) addFaqBtn.addEventListener('click', () => addFaqRow());
 
-  // Check for paid=true in URL (from Stripe redirect)
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.get('paid') === 'true') {
     const notice = $('#payment-notice');
@@ -185,14 +178,12 @@ function initOnboardingForm() {
     }
   }
 
-  // Form submission
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const submitBtn = $('#onboard-submit');
     const responseEl = $('#onboard-response');
     setLoading(submitBtn, true, 'Activating...');
 
-    // Collect FAQs
     const faqs = [];
     $$('.faq-row', faqContainer).forEach(row => {
       const q = row.querySelector('.faq-q')?.value?.trim();
@@ -233,7 +224,6 @@ function initOnboardingForm() {
     setLoading(submitBtn, false);
 
     if (result.ok && result.data?.status === 'onboarded') {
-      // Redirect to success page with business details
       const params = new URLSearchParams({
         bid: result.data.business_id,
         key: result.data.dashboard_api_key,
@@ -282,7 +272,6 @@ async function initDashboard() {
   const dashContainer = $('#dashboard-content');
   if (!dashContainer) return;
 
-  // Get credentials from URL or localStorage
   const params = new URLSearchParams(window.location.search);
   let bizId = params.get('business_id') || localStorage.getItem('operion_biz_id') || '';
   let apiKey = params.get('api_key') || localStorage.getItem('operion_api_key') || '';
@@ -319,13 +308,11 @@ async function initDashboard() {
     const tier = d.tier || 1;
     const tierName = d.tier_name || 'Starter';
 
-    // Header
     const nameEl = $('#dash-business-name');
     const tierEl = $('#dash-tier');
     if (nameEl) nameEl.textContent = d.business_name || '';
     if (tierEl) tierEl.innerHTML = `<span class="badge badge-cyan">${tierName}</span>`;
 
-    // Stats (all tiers)
     if (d.stats) {
       const s = d.stats;
       setEl('#stat-enq-24h', s.enquiries_24h ?? '—');
@@ -336,7 +323,6 @@ async function initDashboard() {
       setEl('#stat-response-rate', s.response_rate_7d != null ? s.response_rate_7d + '%' : '—');
     }
 
-    // Alerts (all tiers)
     const alertsEl = $('#dash-alerts');
     if (alertsEl && d.recent_alerts) {
       if (d.recent_alerts.length === 0) {
@@ -350,7 +336,6 @@ async function initDashboard() {
       }
     }
 
-    // HIVE (Tier 2+)
     const hiveSection = $('#dash-hive');
     if (hiveSection) {
       hiveSection.style.display = tier >= 2 ? 'block' : 'none';
@@ -370,7 +355,6 @@ async function initDashboard() {
       }
     }
 
-    // Analytics (Tier 3+)
     const analyticsSection = $('#dash-analytics');
     if (analyticsSection) {
       analyticsSection.style.display = tier >= 3 ? 'block' : 'none';
@@ -400,4 +384,11 @@ async function initDashboard() {
         setEl('#ent-vector-count', e.vector_entries ?? '—');
         setEl('#ent-queue', e.queue_pending ?? '—');
         setEl('#ent-health', (d.enterprise?.system_health_score ?? '—') + (typeof d.enterprise?.system_health_score === 'number' ? '/100' : ''));
-        const payEl = $('#ent-pay;
+        const payEl = $('#ent-payments');
+        if (payEl && e.payment_history?.length) {
+          payEl.innerHTML = e.payment_history.slice().reverse().map(p => `
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">
+              <span style="font-size:0.82rem;color:var(--white-dim)">${new Date(p.date).toLocaleDateString('en-GB')}</span>
+              <span class="badge badge-${p.status==='succeeded'?'green':'red'}">${p.status}</span>
+              <span class="text-mono" style="color:var(--cyan)">£${p.amount}</span>
+            </div>`).join('');
