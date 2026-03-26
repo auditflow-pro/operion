@@ -7,8 +7,8 @@
 // ── CONFIGURATION ───────────────────────────────────────────────
 // Replace these values with your actual details before going live.
 const OPERION = {
-  BASE_URL: 'https://YOUR-N8N-INSTANCE.com',   // Your n8n domain
-  SECRET:   'YOUR-NETLIFY-WEBHOOK-SECRET',      // Matches admin_config.netlify_webhook_secret
+  BASE_URL: 'https://nonrhymed-elmer-chrysocarpous.ngrok-free.dev ',   // Your n8n domain
+  SECRET:   'Operion-2026',      // Matches admin_config.netlify_webhook_secret
 
   // ── API ENDPOINTS (v2.0) ─────────────────────────────────────
   PATHS: {
