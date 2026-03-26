@@ -82,6 +82,11 @@ function setLoading(btn, loading, text = '') {
   }
 }
 
+function setEl(selector, value) {
+  const el = $(selector);
+  if (el) el.textContent = value;
+}
+
 // ── NAVIGATION ───────────────────────────────────────────────────
 function initNav() {
   const burger = $('.nav-burger');
@@ -140,134 +145,6 @@ async function initStripe() {
   });
 }
 
-// ── ONBOARDING FORM ──────────────────────────────────────────────
-function initOnboardingForm() {
-  const form = $('#onboarding-form');
-  if (!form) return;
-
-  let faqCount = 0;
-  const faqContainer = $('#faq-container');
-  const addFaqBtn = $('#add-faq');
-
-  function addFaqRow(q = '', a = '') {
-    faqCount++;
-    const row = document.createElement('div');
-    row.className = 'faq-row';
-    row.innerHTML = `
-      <div class="form-group">
-        <label class="form-label">Question ${faqCount}</label>
-        <input type="text" class="form-input faq-q" placeholder="e.g. What areas do you cover?" value="${q}">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Answer</label>
-        <textarea class="form-textarea faq-a" rows="2" placeholder="Your answer...">${a}</textarea>
-      </div>
-      <button type="button" class="btn btn-ghost btn-sm remove-faq" style="align-self:flex-end">Remove</button>
-    `;
-    row.querySelector('.remove-faq').addEventListener('click', () => { row.remove(); });
-    faqContainer.appendChild(row);
-  }
-
-  if (addFaqBtn) addFaqBtn.addEventListener('click', () => addFaqRow());
-
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get('paid') === 'true') {
-    const notice = $('#payment-notice');
-    if (notice) {
-      notice.style.display = 'block';
-      notice.innerHTML = `<div class="alert alert-success">✓ Payment confirmed. Please complete your business profile below to activate your account.</div>`;
-    }
-  }
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const submitBtn = $('#onboard-submit');
-    const responseEl = $('#onboard-response');
-    setLoading(submitBtn, true, 'Activating...');
-
-    const faqs = [];
-    $$('.faq-row', faqContainer).forEach(row => {
-      const q = row.querySelector('.faq-q')?.value?.trim();
-      const a = row.querySelector('.faq-a')?.value?.trim();
-      if (q && a) faqs.push({ question: q, answer: a });
-    });
-
-    const formData = new FormData(form);
-    const payload = {
-      operion_secret: OPERION.SECRET,
-      business_name: formData.get('business_name'),
-      owner_name: formData.get('owner_name'),
-      owner_email: formData.get('owner_email'),
-      owner_phone: formData.get('owner_phone'),
-      business_type: formData.get('business_type'),
-      brand_voice: formData.get('brand_voice'),
-      services: formData.get('services'),
-      operating_hours: formData.get('operating_hours'),
-      smtp_host: formData.get('smtp_host'),
-      smtp_port: formData.get('smtp_port') || '587',
-      smtp_user: formData.get('smtp_user'),
-      smtp_pass: formData.get('smtp_pass'),
-      smtp_from_email: formData.get('smtp_from_email'),
-      smtp_from_name: formData.get('smtp_from_name'),
-      escalation_email: formData.get('escalation_email'),
-      emergency_contact: formData.get('emergency_contact'),
-      website: formData.get('website'),
-      custom_instructions: formData.get('custom_instructions'),
-      response_persona: formData.get('response_persona'),
-      faqs: JSON.stringify(faqs),
-    };
-
-    const result = await apiCall(OPERION.PATHS.ONBOARD, {
-      method: 'POST',
-      body: JSON.stringify(payload)
-    });
-
-    setLoading(submitBtn, false);
-
-    if (result.ok && result.data?.status === 'onboarded') {
-      const params = new URLSearchParams({
-        bid: result.data.business_id,
-        key: result.data.dashboard_api_key,
-        name: result.data.business_name,
-        tier: result.data.subscription_tier,
-      });
-      window.location.href = '/onboard-success.html?' + params.toString();
-    } else if (result.data?.status === 'already_registered') {
-      showAlert(responseEl, 'This email address is already registered. Please log in to your dashboard or contact us if you need help.', 'error');
-    } else {
-      showAlert(responseEl, result.data?.message || 'Something went wrong. Please try again or contact us.', 'error');
-    }
-  });
-}
-
-// ── DEMO REQUEST FORM ────────────────────────────────────────────
-function initDemoForm() {
-  const form = $('#demo-form');
-  if (!form) return;
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const btn = $('#demo-submit');
-    const responseEl = $('#demo-response');
-    setLoading(btn, true, 'Sending...');
-
-    const formData = new FormData(form);
-    const result = await apiCall(OPERION.PATHS.DEMO_REQUEST, {
-      method: 'POST',
-      body: JSON.stringify(Object.fromEntries(formData))
-    });
-
-    setLoading(btn, false);
-
-    if (result.ok) {
-      showAlert(responseEl, 'Thank you. We\'ve received your request and will be in touch within one business day.', 'success');
-      form.reset();
-    } else {
-      showAlert(responseEl, 'Something went wrong. Please email us directly at operionautomation@gmail.com', 'error');
-    }
-  });
-}
-
 // ── DASHBOARD ────────────────────────────────────────────────────
 async function initDashboard() {
   const dashContainer = $('#dashboard-content');
@@ -314,68 +191,7 @@ async function initDashboard() {
     if (nameEl) nameEl.textContent = d.business_name || '';
     if (tierEl) tierEl.innerHTML = `<span class="badge badge-cyan">${tierName}</span>`;
 
-    if (d.stats) {
-      const s = d.stats;
-      setEl('#stat-enq-24h', s.enquiries_24h ?? '—');
-      setEl('#stat-enq-7d', s.enquiries_7d ?? '—');
-      setEl('#stat-responded', s.responded_7d ?? '—');
-      setEl('#stat-failed', s.failed_7d ?? '—');
-      setEl('#stat-escalated', s.escalated_7d ?? '—');
-      setEl('#stat-response-rate', s.response_rate_7d != null ? s.response_rate_7d + '%' : '—');
-    }
-
-    const alertsEl = $('#dash-alerts');
-    if (alertsEl && d.recent_alerts) {
-      if (d.recent_alerts.length === 0) {
-        alertsEl.innerHTML = '<p class="text-dim" style="font-size:0.85rem">No unresolved alerts</p>';
-      } else {
-        alertsEl.innerHTML = d.recent_alerts.map(a => `
-          <div class="alert alert-info" style="margin-bottom:8px">
-            <span class="text-mono" style="font-size:0.72rem;color:var(--cyan)">[${a.type.replace(/_/g,'·')}]</span>
-            <span>${a.message}</span>
-          </div>`).join('');
-      }
-    }
-
-    const hiveSection = $('#dash-hive');
-    if (hiveSection) {
-      hiveSection.style.display = tier >= 2 ? 'block' : 'none';
-      if (tier >= 2 && d.hive) {
-        setEl('#hive-patterns', d.hive.patterns_detected_30d ?? '—');
-        setEl('#hive-pending-recs', d.hive.pending_recommendations ?? '—');
-        const patternsEl = $('#hive-pattern-list');
-        if (patternsEl && d.hive.top_patterns?.length) {
-          patternsEl.innerHTML = d.hive.top_patterns.map(p => `
-            <div class="card" style="padding:1rem;margin-bottom:8px">
-              <div class="badge badge-cyan" style="margin-bottom:8px">${p.type.replace(/_/g,' ')}</div>
-              <p style="font-size:0.85rem;color:var(--white-dim)">${p.description}</p>
-            </div>`).join('');
-        } else if (patternsEl) {
-          patternsEl.innerHTML = '<p class="text-dim" style="font-size:0.85rem">No patterns detected yet</p>';
-        }
-      }
-    }
-
-    const analyticsSection = $('#dash-analytics');
-    if (analyticsSection) {
-      analyticsSection.style.display = tier >= 3 ? 'block' : 'none';
-      if (tier >= 3 && d.analytics) {
-        const a = d.analytics;
-        setEl('#analytics-quality', a.avg_response_quality ? a.avg_response_quality + '/100' : '—');
-        setEl('#analytics-response-time', a.avg_response_time_seconds ? a.avg_response_time_seconds + 's' : '—');
-        const clsEl = $('#analytics-classifications');
-        if (clsEl && a.classification_breakdown) {
-          const entries = Object.entries(a.classification_breakdown).sort((x,y) => y[1]-x[1]);
-          clsEl.innerHTML = entries.map(([k,v]) => `
-            <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)">
-              <span style="font-size:0.85rem;text-transform:capitalize">${k.replace(/_/g,' ')}</span>
-              <span class="text-mono" style="color:var(--cyan)">${v}</span>
-            </div>`).join('');
-        }
-      }
-    }
-
-    // Enterprise Tier 4 — fully closed braces
+    // Enterprise Section — fully closed
     const enterpriseSection = $('#dash-enterprise');
     if (enterpriseSection) {
       enterpriseSection.style.display = tier >= 4 ? 'block' : 'none';
@@ -392,4 +208,18 @@ async function initDashboard() {
               <span style="font-size:0.82rem;color:var(--white-dim)">${new Date(p.date).toLocaleDateString('en-GB')}</span>
               <span class="badge badge-${p.status==='succeeded'?'green':'red'}">${p.status}</span>
               <span class="text-mono" style="color:var(--cyan)">£${p.amount}</span>
-            </div>`).
+            </div>`).join('');
+        }
+      }
+    }
+  }
+}
+
+// ── INIT ────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  initNav();
+  initStripe();
+  initOnboardingForm();
+  initDemoForm();
+  initDashboard();
+});
