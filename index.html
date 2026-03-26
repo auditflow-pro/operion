@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Operion Systems — AI-Powered Enquiry Handling for Any Business</title>
+  <meta name="description" content="Operion handles your customer enquiries automatically — in your voice, from your email address, around the clock. From £79/month. No software to install. No servers to manage.">
+  <meta name="keywords" content="AI customer service, automated enquiry handling, AI business automation, customer response automation, Operion">
+  <meta property="og:title" content="Operion Systems — Automated AI Enquiry Handling">
+  <meta property="og:description" content="Every customer enquiry handled automatically. In your voice. From your email. 24/7.">
+  <meta property="og:type" content="website">
+  <meta name="robots" content="index, follow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── HOMEPAGE SPECIFIC ─────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 0 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 70% 50%, rgba(0,229,255,0.04) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 20% 80%, rgba(0,229,255,0.03) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-grid-lines {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.3;
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--cyan-glow);
+      border: 1px solid rgba(0,229,255,0.2);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--cyan);
+      letter-spacing: 0.08em;
+      margin-bottom: 2rem;
+    }
+    .hero-eyebrow-dot {
+      width: 6px; height: 6px;
+      background: var(--cyan);
+      border-radius: 50%;
+      animation: pulse-glow 2s ease infinite;
+    }
+    .hero h1 { margin-bottom: 1.5rem; }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--cyan);
+      position: relative;
+    }
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--white-dim);
+      line-height: 1.7;
+      max-width: 560px;
+      margin-bottom: 2.5rem;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 3rem;
+    }
+    .hero-proof {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .hero-proof-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--white-faint);
+    }
+    .hero-proof-item span { color: var(--green); font-size: 0.9rem; }
+    .hero-visual {
+      position: absolute;
+      right: -2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 420px;
+      opacity: 0.85;
+    }
+
+    /* ── TICKER ─────────────────────────────────────────────── */
+    .ticker-wrap {
+      background: var(--deep);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 0;
+      overflow: hidden;
+    }
+    .ticker-inner {
+      display: flex;
+      gap: 0;
+      animation: ticker 40s linear infinite;
+      width: max-content;
+    }
+    .ticker-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 2rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--white-faint);
+      white-space: nowrap;
+    }
+    .ticker-dot {
+      width: 4px; height: 4px;
+      background: var(--cyan);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .ticker-meta { color: var(--white-faint); opacity: 0.5; }
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ── HOW IT WORKS ───────────────────────────────────────── */
+    .steps { display: flex; flex-direction: column; gap: 0; }
+    .step {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 2rem;
+      padding: 2.5rem 0;
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+    }
+    .step:last-child { border-bottom: none; }
+    .step-number {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 3rem;
+      color: var(--border-light);
+      line-height: 1;
+      padding-top: 4px;
+      transition: color var(--transition);
+    }
+    .step:hover .step-number { color: var(--cyan); }
+    .step-content h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: var(--white);
+    }
+    .step-content p { font-size: 0.92rem; color: var(--white-dim); line-height: 1.7; }
+
+    /* ── FEATURES ───────────────────────────────────────────── */
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      transition: all var(--transition);
+    }
+    .feature-card:hover {
+      border-color: var(--cyan-dim);
+      transform: translateY(-2px);
+      box-shadow: var(--glow);
+    }
+    .feature-icon {
+      width: 44px; height: 44px;
+      background: var(--cyan-glow);
+      border: 1px solid rgba(0,229,255,0.2);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      margin-bottom: 1.25rem;
+    }
+    .feature-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .feature-card p { font-size: 0.85rem; color: var(--white-dim); line-height: 1.6; }
+
+    /* ── AI DISCLAIMER BANNER ───────────────────────────────── */
+    .ai-disclaimer {
+      background: rgba(0,229,255,0.04);
+      border: 1px solid rgba(0,229,255,0.12);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    .ai-disclaimer-icon {
+      font-size: 1.4rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* ── PRICING PREVIEW ────────────────────────────────────── */
+    .pricing-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      transition: all var(--transition);
+    }
+    .pricing-card.featured {
+      border-color: var(--cyan);
+      box-shadow: var(--glow);
+      position: relative;
+    }
+    .pricing-card.featured::before {
+      content: 'Most Popular';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--cyan);
+      color: var(--black);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 100px;
+    }
+    .pricing-price {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 2.4rem;
+      color: var(--white);
+      line-height: 1;
+    }
+    .pricing-price sup { font-size: 1.2rem; vertical-align: super; }
+    .pricing-price span { font-size: 0.9rem; font-weight: 400; color: var(--white-dim); }
+    .pricing-features { display: flex; flex-direction: column; gap: 10px; }
+    .pricing-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: var(--white-dim);
+    }
+    .pricing-feature::before {
+      content: '✓';
+      color: var(--cyan);
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body>
+
+<!-- ── NAVIGATION ──────────────────────────────────────────────── -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo">
+    <img src="logo.svg" alt="Operion Systems">
+    OPERION <span class="nav-logo-sys">SYSTEMS</span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="how-it-works.html">How It Works</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="about.html">About</a>
+    <a href="demo.html">Demo</a>
+    <a href="legal.html">Legal</a>
+  </div>
+  <div class="nav-cta">
+    <a href="dashboard.html" class="btn btn-ghost btn-sm">Client Login</a>
+    <a href="get-started.html" class="btn btn-primary btn-sm">Get Started</a>
+  </div>
+  <button class="nav-burger" aria-label="Menu">☰</button>
+</nav>
+
+<!-- ── HERO ────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="container">
+    <div class="hero-content animate-fade-up">
+      <div class="hero-eyebrow">
+        <span class="hero-eyebrow-dot"></span>
+        AI-Powered Enquiry Handling — Live 24/7
+      </div>
+      <h1 class="display-1">
+        Customer enquiries.<br><em>Handled.</em><br>Automatically.
+      </h1>
+      <p class="hero-sub">
+        Operion receives your customer messages, understands what they need, and responds in your voice — from your email address — within seconds. You don't install anything. You don't manage anything. You just get customers answered.
+      </p>
+      <div class="hero-actions">
+        <a href="get-started.html" class="btn btn-primary btn-lg">Start Free Trial</a>
+        <a href="demo.html" class="btn btn-ghost btn-lg">Request a Demo</a>
+        <a href="#how-it-works" class="btn btn-ghost btn-lg">See How It Works</a>
+      </div>
+      <div class="hero-proof">
+        <div class="hero-proof-item"><span>✓</span> No installation required</div>
+        <div class="hero-proof-item"><span>✓</span> Responds within minutes</div>
+        <div class="hero-proof-item"><span>✓</span> Works for any business type</div>
+        <div class="hero-proof-item"><span>✓</span> From £79/month</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── LIVE TICKER ──────────────────────────────────────────────── -->
+<div class="ticker-wrap">
+  <div class="ticker-inner"></div>
+</div>
+
+<!-- ── STATS ───────────────────────────────────────────────────── -->
+<section class="section-sm" style="background:var(--deep);border-bottom:1px solid var(--border)">
+  <div class="container">
+    <div class="grid-4" style="text-align:center">
+      <div data-animate>
+        <div class="stat-value"><span data-count="15" data-suffix=" types">0</span></div>
+        <div class="stat-label">Enquiry Classifications</div>
+      </div>
+      <div data-animate class="delay-1">
+        <div class="stat-value"><span data-count="4" data-suffix=" tier">0</span></div>
+        <div class="stat-label">AI Failsafe Chain</div>
+      </div>
+      <div data-animate class="delay-2">
+        <div class="stat-value"><span data-count="4" data-suffix=" tier">0</span></div>
+        <div class="stat-label">AI Failsafe Chain</div>
+      </div>
+      <div data-animate class="delay-3">
+        <div class="stat-value"><span data-count="24" data-suffix="/7">0</span></div>
+        <div class="stat-label">Always On</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ─────────────────────────────────────────────── -->
+<section class="section" id="how-it-works">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start">
+      <div>
+        <div class="section-label">How It Works</div>
+        <h2 class="display-2" style="margin-bottom:1rem">From enquiry to response in seconds</h2>
+        <p style="color:var(--white-dim);margin-bottom:3rem;line-height:1.7">
+          Operion runs entirely on our infrastructure. Your customers contact you as they always have. We handle everything in between.
+        </p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">01</div>
+            <div class="step-content">
+              <h3>Customer sends an enquiry</h3>
+              <p>By email, contact form, or any other channel. It arrives at Operion automatically.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">02</div>
+            <div class="step-content">
+              <h3>Operion reads and understands it</h3>
+              <p>Our AI classifies the enquiry, extracts key details, and searches your knowledge base for relevant context.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">03</div>
+            <div class="step-content">
+              <h3>A response is generated in your voice</h3>
+              <p>Using your brand voice, your services, and your specific knowledge — not a generic template.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">04</div>
+            <div class="step-content">
+              <h3>Sent from your email address</h3>
+              <p>Your customer receives a reply from you. You receive a weekly report on everything that was handled. We recommend notifying customers in your privacy policy that AI may be used to handle their enquiries.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="terminal" style="margin-bottom:1.5rem">
+          <div class="terminal-bar">
+            <div class="terminal-dot terminal-dot-red"></div>
+            <div class="terminal-dot terminal-dot-amber"></div>
+            <div class="terminal-dot terminal-dot-green"></div>
+            <div class="terminal-title">operion — live processing</div>
+          </div>
+          <div><span class="t-comment">// Incoming enquiry — 14:32:07</span></div>
+          <div><span class="t-prompt">→ </span><span class="t-cmd">OrchestratorEngine.receive()</span></div>
+          <div><span class="t-output">  channel: email | business: BIZ-00142</span></div>
+          <div><span class="t-output">  customer: Sarah Johnson</span></div>
+          <div style="margin-top:8px"><span class="t-prompt">→ </span><span class="t-cmd">GuardianEngine.validate()</span></div>
+          <div><span class="t-success">  ✓ Security check passed</span></div>
+          <div><span class="t-success">  ✓ Subscription active — Tier 2</span></div>
+          <div style="margin-top:8px"><span class="t-prompt">→ </span><span class="t-cmd">IntelligenceEngine.classify()</span></div>
+          <div><span class="t-output">  classification: booking</span></div>
+          <div><span class="t-output">  confidence: 0.92 | priority: 3</span></div>
+          <div><span class="t-output">  kb_results_found: 4</span></div>
+          <div style="margin-top:8px"><span class="t-prompt">→ </span><span class="t-cmd">ResponseEngine.generate(llama2)</span></div>
+          <div><span class="t-success">  ✓ Response generated — 847ms</span></div>
+          <div><span class="t-success">  ✓ Delivered via SMTP</span></div>
+          <div style="margin-top:8px"><span class="t-comment">// HIVE Mind event written (async)</span></div>
+        </div>
+        <div class="ai-disclaimer">
+          <div class="ai-disclaimer-icon">🤖</div>
+          <div>
+            <p style="font-size:0.85rem;font-weight:500;margin-bottom:4px">AI Transparency Notice</p>
+            <p style="font-size:0.82rem;color:var(--white-dim);line-height:1.6">
+              Operion uses locally-hosted AI models (Llama2, Mistral, Phi) to generate responses. All AI output is reviewed against your business context and knowledge base. Responses are sent in your business name and you remain responsible for the content delivered to your customers. See our <a href="legal.html#ai-disclaimer">AI Policy</a> for full details.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURES ─────────────────────────────────────────────────── -->
+<section class="section" style="background:var(--deep);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:4rem">
+      <div class="section-label" style="justify-content:center">Platform Features</div>
+      <h2 class="display-2">Built for the real world</h2>
+      <p style="color:var(--white-dim);max-width:560px;margin:1rem auto 0">Not a demo. Not a proof of concept. A production platform handling real enquiries for real businesses.</p>
+    </div>
+    <div class="grid-3" style="margin-bottom:1.5rem">
+      <div class="feature-card" data-animate>
+        <div class="feature-icon">⚡</div>
+        <h3>Handles Every Enquiry Type</h3>
+        <p>15 classification types from emergencies to feedback, complaints to bookings, pricing queries to accessibility requests. For any business in any sector.</p>
+      </div>
+      <div class="feature-card" data-animate class="delay-1">
+        <div class="feature-icon">🛡</div>
+        <h3>GUARDIAN Security Engine</h3>
+        <p>SQL injection, XSS, prompt injection, spam detection — every enquiry is screened before it reaches your AI. Threats are blocked and you're notified immediately.</p>
+      </div>
+      <div class="feature-card" data-animate class="delay-2">
+        <div class="feature-icon">🔗</div>
+        <h3>4-Tier AI Failsafe</h3>
+        <p>Llama2 → Mistral → Phi → Static template. Your customers always get a response, even if all three AI models are temporarily unavailable.</p>
+      </div>
+      <div class="feature-card" data-animate>
+        <div class="feature-icon">🧠</div>
+        <h3>HIVE Mind Intelligence</h3>
+        <p>Learns from every interaction. Detects patterns, scores response quality, proposes improvements. Nothing changes without your approval.</p>
+      </div>
+      <div class="feature-card" data-animate class="delay-1">
+        <div class="feature-icon">🌐</div>
+        <h3>Operion Ecosystem</h3>
+        <p>External knowledge ingestion from industry sources. Collective intelligence across all tenants. Vector search. Continuously learning from operational patterns.</p>
+      </div>
+      <div class="feature-card" data-animate class="delay-2">
+        <div class="feature-icon">💳</div>
+        <h3>Full Stripe Integration</h3>
+        <p>Automated tier management. Payment confirmation, subscription changes, cancellations — all handled instantly with a complete audit trail.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRICING PREVIEW ───────────────────────────────────────────── -->
+<section class="section">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:4rem">
+      <div class="section-label" style="justify-content:center">Pricing</div>
+      <h2 class="display-2">One monthly fee. Everything included.</h2>
+      <p style="color:var(--white-dim);max-width:500px;margin:1rem auto 0">No per-enquiry charges. No hidden fees. No API costs. Your AI runs on our hardware.</p>
+    </div>
+    <div class="grid-4" style="align-items:start">
+      <div class="pricing-card">
+        <div>
+          <div class="badge badge-cyan" style="margin-bottom:1rem">Starter</div>
+          <div class="pricing-price"><sup>£</sup>79<span>/month</span></div>
+        </div>
+        <div class="pricing-features">
+          <div class="pricing-feature">500 enquiries/hour</div>
+          <div class="pricing-feature">All channels</div>
+          <div class="pricing-feature">AI failsafe chain</div>
+          <div class="pricing-feature">Escalation alerts</div>
+          <div class="pricing-feature">Weekly report</div>
+        </div>
+        <a href="pricing.html" class="btn btn-ghost">View Details</a>
+      </div>
+      <div class="pricing-card featured">
+        <div>
+          <div class="badge badge-cyan" style="margin-bottom:1rem">Growth</div>
+          <div class="pricing-price"><sup>£</sup>149<span>/month</span></div>
+        </div>
+        <div class="pricing-features">
+          <div class="pricing-feature">2,000 enquiries/hour</div>
+          <div class="pricing-feature">All Starter features</div>
+          <div class="pricing-feature">HIVE Mind analysis</div>
+          <div class="pricing-feature">Pattern detection</div>
+          <div class="pricing-feature">Automation suggestions</div>
+        </div>
+        <a href="get-started.html" class="btn btn-primary" data-checkout-tier="2">Get Started</a>
+      </div>
+      <div class="pricing-card">
+        <div>
+          <div class="badge badge-cyan" style="margin-bottom:1rem">Scale</div>
+          <div class="pricing-price"><sup>£</sup>249<span>/month</span></div>
+        </div>
+        <div class="pricing-features">
+          <div class="pricing-feature">5,000 enquiries/hour</div>
+          <div class="pricing-feature">All Growth features</div>
+          <div class="pricing-feature">Analytics overview</div>
+          <div class="pricing-feature">Quality scoring</div>
+          <div class="pricing-feature">AI model breakdown</div>
+        </div>
+        <a href="pricing.html" class="btn btn-ghost">View Details</a>
+      </div>
+      <div class="pricing-card">
+        <div>
+          <div class="badge badge-cyan" style="margin-bottom:1rem">Enterprise</div>
+          <div class="pricing-price"><sup>£</sup>399<span>/month</span></div>
+        </div>
+        <div class="pricing-features">
+          <div class="pricing-feature">Unlimited enquiries</div>
+          <div class="pricing-feature">All Scale features</div>
+          <div class="pricing-feature">Full dashboard</div>
+          <div class="pricing-feature">KB management</div>
+          <div class="pricing-feature">Priority support</div>
+        </div>
+        <a href="pricing.html" class="btn btn-ghost">View Details</a>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:2rem;font-size:0.82rem;color:var(--white-faint)">
+      All plans include a 30-day money-back guarantee. <a href="legal.html#refunds">Terms apply.</a>
+    </p>
+  </div>
+</section>
+
+<!-- ── CTA ──────────────────────────────────────────────────────── -->
+<section class="section-sm" style="background:var(--deep);border-top:1px solid var(--border)">
+  <div class="container" style="text-align:center">
+    <div class="section-label" style="justify-content:center">Ready to Start</div>
+    <h2 class="display-2" style="margin-bottom:1rem">Your customers deserve answers at 2am on a Sunday</h2>
+    <p style="color:var(--white-dim);max-width:500px;margin:0 auto 2.5rem">Tell us about your business. We handle everything else. From today.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+      <a href="get-started.html" class="btn btn-primary btn-lg">Activate Your Account</a>
+      <a href="how-it-works.html" class="btn btn-ghost btn-lg">Learn More</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ───────────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo" style="margin-bottom:1rem">
+          <div class="nav-logo-mark"></div>
+          Operion Systems
+        </div>
+        <p>A managed AI service designed to handle your customer enquiries automatically — in your voice, from your email address, around the clock. Running on our infrastructure. You stay in control.</p>
+        <p style="margin-top:1rem;font-size:0.8rem;color:var(--white-faint)">Registered in England and Wales.<br>Company No. [TO BE INSERTED]</p>
+      </div>
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="how-it-works.html">How It Works</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="get-started.html">Get Started</a></li>
+          <li><a href="dashboard.html">Client Dashboard</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About Operion</a>
+        <a href="demo.html">Request Demo</a></li>
+          <li><a href="about.html#contact">Contact</a></li>
+          <li><a href="legal.html">Legal</a></li>
+          <li><a href="legal.html#ai-disclaimer">AI Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="legal.html#terms">Terms of Service</a></li>
+          <li><a href="legal.html#privacy">Privacy Policy</a></li>
+          <li><a href="legal.html#refunds">Refund Policy</a></li>
+          <li><a href="legal.html#ai-disclaimer">AI Disclaimer</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Operion Systems Ltd. All rights reserved. Operion™ is a trademark of Operion Systems Ltd.</p>
+      <div class="footer-legal-links">
+        <a href="legal.html#privacy">Privacy</a>
+        <a href="legal.html#terms">Terms</a>
+        <a href="legal.html#ai-disclaimer">AI Policy</a>
+        <a href="legal.html#cookies">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script src="app.js"></script>
+</body>
+</html>

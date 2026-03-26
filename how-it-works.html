@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How It Works — Operion Systems Ltd</title>
+  <meta name="description" content="How Operion handles your customer enquiries automatically. The technology, the architecture, and the people behind it.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .arch-layer {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      margin-bottom: 1rem;
+      position: relative;
+      transition: border-color var(--transition);
+    }
+    .arch-layer:hover { border-color: var(--cyan-dim); }
+    .arch-layer-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.75rem;
+    }
+    .arch-layer h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+    .arch-layer p { font-size: 0.88rem; color: var(--white-dim); line-height: 1.7; }
+    .arch-connector {
+      text-align: center;
+      padding: 8px 0;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--white-faint);
+    }
+    .engine-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+    .engine-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+    }
+    .engine-card h4 { font-size: 0.9rem; margin-bottom: 0.4rem; }
+    .engine-card p { font-size: 0.8rem; color: var(--white-dim); line-height: 1.6; }
+    @media(max-width:768px){
+      .engine-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo"><img src="logo.svg" alt="Operion Systems">OPERION <span class="nav-logo-sys">SYSTEMS</span></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="how-it-works.html" class="active">How It Works</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="about.html">About</a>
+    <a href="demo.html">Demo</a>
+    <a href="legal.html">Legal</a>
+  </div>
+  <div class="nav-cta">
+    <a href="dashboard.html" class="btn btn-ghost btn-sm">Client Login</a>
+    <a href="get-started.html" class="btn btn-primary btn-sm">Get Started</a>
+  </div>
+  <button class="nav-burger">☰</button>
+</nav>
+
+<section style="padding:120px 0 60px">
+  <div class="container">
+    <div class="section-label">How It Works</div>
+    <h1 class="display-2" style="max-width:700px;margin-bottom:1.5rem">Three layers of intelligence. One goal: every enquiry handled.</h1>
+    <p style="color:var(--white-dim);max-width:600px;font-size:1.05rem;line-height:1.7">Operion is not software you install. It is a managed service that runs on our infrastructure. You tell us about your business. We handle everything else.</p>
+  </div>
+</section>
+
+<section class="section" style="background:var(--deep);border-top:1px solid var(--border)">
+  <div class="container">
+    <div class="section-label">Architecture</div>
+    <h2 class="display-3" style="margin-bottom:3rem">Three concentric layers</h2>
+
+    <div style="max-width:700px">
+      <div class="arch-layer" style="background:rgba(0,229,255,0.03)">
+        <div class="arch-layer-label">Outer Layer — Expansion</div>
+        <h3>Operion Ecosystem</h3>
+        <p>The outer wrapper. Connects the platform to the world. Ingests external knowledge from industry sources. Hosts the Collective Intelligence Network — anonymised patterns aggregated across all businesses. Runs the Automation Marketplace. Monitors system health every 5 minutes.</p>
+
+        <div style="margin-top:1.5rem;padding:1rem;background:var(--deep);border-radius:var(--radius)">
+          <div class="arch-layer" style="margin-bottom:1rem">
+            <div class="arch-layer-label">Middle Layer — Intelligence</div>
+            <h3>Operion HIVE Mind</h3>
+            <p>The brain. Completely async — never interferes with enquiry processing. Runs every 10 minutes. Detects 7 pattern types, scores every delivered response, identifies KB gaps, proposes improvements. All changes require your approval before activation.</p>
+
+            <div style="margin-top:1.5rem;padding:1rem;background:var(--black);border-radius:var(--radius)">
+              <div class="arch-layer" style="border-color:var(--cyan);background:rgba(0,229,255,0.02)">
+                <div class="arch-layer-label">Core — Execution Engine</div>
+                <h3>Operion Core</h3>
+                <p>The gateway. Every enquiry enters here. Every response exits here. Contains the Orchestrator, GUARDIAN security, Intelligence Engine, Response Engine, Stripe payment management, self-test suite, dashboard API, and onboarding system. The thing that does the actual work.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-label">The Engines</div>
+    <h2 class="display-3" style="margin-bottom:2rem">What's inside Operion Core</h2>
+    <div class="engine-grid">
+      <div class="engine-card">
+        <h4>🔀 Orchestrator Engine</h4>
+        <p>Central coordination. Every enquiry from every channel is normalised to a standard event schema before anything else happens.</p>
+      </div>
+      <div class="engine-card">
+        <h4>🛡 GUARDIAN Security Engine</h4>
+        <p>SQL injection, XSS, prompt injection, spam, phishing — blocked before they reach your AI. Threats are logged and you are alerted.</p>
+      </div>
+      <div class="engine-card">
+        <h4>🧠 Intelligence Engine</h4>
+        <p>Intent classification (15 types), entity extraction (dates, amounts, references, urgency), priority scoring, vector knowledge search.</p>
+      </div>
+      <div class="engine-card">
+        <h4>⚡ Response Engine</h4>
+        <p>Llama2 → Mistral → Phi → Static fallback. Four-tier failsafe. Your customers always receive a response, regardless of AI availability.</p>
+      </div>
+      <div class="engine-card">
+        <h4>📬 Queue Engine</h4>
+        <p>Priority queue, deduplication, automatic retry, dead-letter handling. Built for resilience — failed deliveries are retried automatically and flagged to you.</p>
+      </div>
+      <div class="engine-card">
+        <h4>💳 Stripe Payment Engine</h4>
+        <p>Automatic tier activation, subscription management, payment confirmation, failure alerts. Full audit trail. No card data stored.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:3rem">
+      <div class="section-label">The AI</div>
+      <h2 class="display-3" style="margin-bottom:1.5rem">Locally hosted. No external AI APIs.</h2>
+      <div class="grid-2">
+        <div>
+          <p style="color:var(--white-dim);line-height:1.8;margin-bottom:1rem">All AI processing runs on our own hardware using Ollama-hosted models. No data is sent to OpenAI, Google, Anthropic, or any external AI provider. Your enquiries and your customers' data stay within our infrastructure.</p>
+          <p style="color:var(--white-dim);line-height:1.8">This also means there are no per-token costs — your monthly subscription covers all AI processing, regardless of enquiry volume.</p>
+        </div>
+        <div class="terminal">
+          <div class="terminal-bar">
+            <div class="terminal-dot terminal-dot-red"></div>
+            <div class="terminal-dot terminal-dot-amber"></div>
+            <div class="terminal-dot terminal-dot-green"></div>
+            <div class="terminal-title">AI failsafe chain</div>
+          </div>
+          <div><span class="t-prompt">1 </span><span class="t-cmd">Llama2 (primary)</span> <span class="t-success">→ fast, capable</span></div>
+          <div><span class="t-prompt">2 </span><span class="t-cmd">Mistral (fallback)</span> <span class="t-output">→ if Llama2 fails</span></div>
+          <div><span class="t-prompt">3 </span><span class="t-cmd">Phi (knowledge)</span> <span class="t-output">→ if Mistral fails</span></div>
+          <div><span class="t-prompt">4 </span><span class="t-cmd">Static template</span> <span class="t-comment">→ guaranteed attempt</span></div>
+          <div style="margin-top:12px"><span class="t-success">✓ Customer always gets a response</span></div>
+          <div><span class="t-success">✓ You're alerted if fallback is used</span></div>
+          <div><span class="t-success">✓ No external API. Your data stays local.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:4rem">
+      <div class="alert" style="background:rgba(255,184,0,0.05);border:1px solid rgba(255,184,0,0.2)">
+        <span style="font-size:1.2rem">⚠</span>
+        <div>
+          <strong style="display:block;margin-bottom:4px">AI Transparency</strong>
+          <span style="font-size:0.85rem;color:var(--white-dim)">Operion uses AI to generate responses that are sent from your email address in your business name. You are legally responsible for these communications. AI can and does make mistakes. We are transparent about this. Read our full <a href="legal.html#ai-disclaimer">AI Disclaimer</a> before using the service.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-sm" style="background:var(--deep);border-top:1px solid var(--border);text-align:center">
+  <div class="container">
+    <h2 class="display-3" style="margin-bottom:1rem">See it for yourself</h2>
+    <p style="color:var(--white-dim);margin-bottom:2rem">Activate your account in 5 minutes. No software to install. No servers to manage on your end.</p>
+    <a href="get-started.html" class="btn btn-primary btn-lg">Activate Your Account</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <p>© 2025 Operion Systems Ltd. All rights reserved.</p>
+      <div class="footer-legal-links">
+        <a href="legal.html#privacy">Privacy</a>
+        <a href="legal.html#terms">Terms</a>
+        <a href="legal.html#ai-disclaimer">AI Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>

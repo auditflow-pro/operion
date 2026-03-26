@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <defs>
+    <radialGradient id="core-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00E5FF" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#00E5FF" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Glow field behind everything -->
+  <circle cx="100" cy="100" r="80" fill="url(#core-glow)"/>
+
+  <!-- Outer ring: Ecosystem layer - faint, expansive -->
+  <polygon points="100,10 181.5,55 181.5,145 100,190 18.5,145 18.5,55"
+    stroke="#00E5FF" stroke-width="1" fill="none" opacity="0.2"
+    stroke-dasharray="4 4"/>
+
+  <!-- Middle ring: HIVE layer -->
+  <polygon points="100,30 163,66.5 163,133.5 100,170 37,133.5 37,66.5"
+    stroke="#00E5FF" stroke-width="1.2" fill="none" opacity="0.45"/>
+
+  <!-- Inner ring: Core layer - brightest -->
+  <polygon points="100,52 148,78 148,124 100,150 52,124 52,78"
+    stroke="#00E5FF" stroke-width="1.8" fill="#00E5FF" fill-opacity="0.05"/>
+
+  <!-- Radial spokes: signal flows -->
+  <line x1="100" y1="100" x2="100" y2="52"   stroke="#00E5FF" stroke-width="0.8" opacity="0.4"/>
+  <line x1="100" y1="100" x2="148" y2="78"   stroke="#00E5FF" stroke-width="0.8" opacity="0.4"/>
+  <line x1="100" y1="100" x2="148" y2="124"  stroke="#00E5FF" stroke-width="0.8" opacity="0.4"/>
+  <line x1="100" y1="100" x2="100" y2="150"  stroke="#00E5FF" stroke-width="0.8" opacity="0.4"/>
+  <line x1="100" y1="100" x2="52"  y2="124"  stroke="#00E5FF" stroke-width="0.8" opacity="0.4"/>
+  <line x1="100" y1="100" x2="52"  y2="78"   stroke="#00E5FF" stroke-width="0.8" opacity="0.4"/>
+
+  <!-- Six vertex nodes: the businesses Operion serves -->
+  <circle cx="100" cy="52"  r="3.5" fill="#00E5FF" opacity="0.8" filter="url(#glow)"/>
+  <circle cx="148" cy="78"  r="3.5" fill="#00E5FF" opacity="0.8" filter="url(#glow)"/>
+  <circle cx="148" cy="124" r="3.5" fill="#00E5FF" opacity="0.8" filter="url(#glow)"/>
+  <circle cx="100" cy="150" r="3.5" fill="#00E5FF" opacity="0.8" filter="url(#glow)"/>
+  <circle cx="52"  cy="124" r="3.5" fill="#00E5FF" opacity="0.8" filter="url(#glow)"/>
+  <circle cx="52"  cy="78"  r="3.5" fill="#00E5FF" opacity="0.8" filter="url(#glow)"/>
+
+  <!-- Central core: the engine itself - brightest element -->
+  <circle cx="100" cy="100" r="12" fill="#050810"/>
+  <circle cx="100" cy="100" r="12" stroke="#00E5FF" stroke-width="1.5" fill="none" opacity="0.6"/>
+  <circle cx="100" cy="100" r="7"  fill="#00E5FF" opacity="0.95" filter="url(#glow)"/>
+
+  <!-- Inner pulse ring around core -->
+  <circle cx="100" cy="100" r="18" stroke="#00E5FF" stroke-width="0.5" fill="none" opacity="0.2"/>
+</svg>

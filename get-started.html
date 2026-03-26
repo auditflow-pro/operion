@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Get Started — Operion Systems Ltd</title>
+  <meta name="description" content="Activate your Operion account. Tell us about your business and we handle everything else.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .onboard-layout {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 3rem;
+      align-items: start;
+    }
+    .onboard-sidebar {
+      position: sticky;
+      top: 84px;
+    }
+    .step-indicator {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-bottom: 2rem;
+    }
+    .step-ind {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding-bottom: 1.5rem;
+      position: relative;
+    }
+    .step-ind:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 14px;
+      top: 32px;
+      bottom: 0;
+      width: 1px;
+      background: var(--border);
+    }
+    .step-ind-num {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--white-dim);
+      flex-shrink: 0;
+      z-index: 1;
+    }
+    .step-ind.active .step-ind-num {
+      background: var(--cyan);
+      color: var(--black);
+      border-color: var(--cyan);
+      font-weight: 600;
+    }
+    .step-ind-text h4 { font-size: 0.88rem; color: var(--white); margin-bottom: 2px; }
+    .step-ind-text p { font-size: 0.78rem; color: var(--white-faint); }
+    .form-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .form-section h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      color: var(--white);
+    }
+    .form-section .section-desc {
+      font-size: 0.82rem;
+      color: var(--white-dim);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-full { grid-column: 1 / -1; }
+    .faq-row {
+      background: var(--deep);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    .consent-block {
+      background: rgba(0,229,255,0.04);
+      border: 1px solid rgba(0,229,255,0.15);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .consent-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 1rem;
+    }
+    .consent-item:last-child { margin-bottom: 0; }
+    .consent-item input[type="checkbox"] {
+      width: 16px; height: 16px;
+      margin-top: 2px;
+      accent-color: var(--cyan);
+      flex-shrink: 0;
+    }
+    .consent-item label {
+      font-size: 0.82rem;
+      color: var(--white-dim);
+      line-height: 1.6;
+    }
+    .consent-item label a { color: var(--cyan); }
+    #payment-notice { display: none; margin-bottom: 1.5rem; }
+    @media(max-width:900px){
+      .onboard-layout { grid-template-columns: 1fr; }
+      .onboard-sidebar { position: static; }
+      .form-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo"><img src="logo.svg" alt="Operion Systems">OPERION <span class="nav-logo-sys">SYSTEMS</span></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="how-it-works.html">How It Works</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="about.html">About</a>
+    <a href="demo.html">Demo</a>
+    <a href="legal.html">Legal</a>
+  </div>
+  <div class="nav-cta">
+    <a href="dashboard.html" class="btn btn-ghost btn-sm">Client Login</a>
+  </div>
+  <button class="nav-burger">☰</button>
+</nav>
+
+<section style="padding:100px 0 80px">
+  <div class="container">
+    <div class="section-label">Activation</div>
+    <h1 class="display-2" style="margin-bottom:0.5rem">Activate Your Account</h1>
+    <p style="color:var(--white-dim);margin-bottom:3rem">Tell us about your business. We handle everything else. Takes about 5 minutes.</p>
+
+    <div id="payment-notice"></div>
+
+    <div class="onboard-layout">
+
+      <!-- Form -->
+      <div>
+        <form id="onboarding-form" novalidate>
+
+          <!-- Business Info -->
+          <div class="form-section">
+            <h3>1. Business Information</h3>
+            <p class="section-desc">Tell us who you are. This information is used to set up your Operion account and personalise AI responses.</p>
+            <div class="form-grid">
+              <div class="form-group form-full">
+                <label class="form-label">Business Name *</label>
+                <input type="text" name="business_name" class="form-input" placeholder="e.g. Hadfield Plumbing & Heating" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Your Name *</label>
+                <input type="text" name="owner_name" class="form-input" placeholder="First and last name" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Your Email Address *</label>
+                <input type="email" name="owner_email" class="form-input" placeholder="you@yourbusiness.com" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Your Phone Number</label>
+                <input type="tel" name="owner_phone" class="form-input" placeholder="+44 7700 000000">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Business Type</label>
+                <select name="business_type" class="form-select">
+                  <option value="general">General / Other</option>
+                  <option value="trades">Trades (plumber, electrician, builder)</option>
+                  <option value="retail">Retail / E-commerce</option>
+                  <option value="professional_services">Professional Services</option>
+                  <option value="hospitality">Hospitality / Food & Beverage</option>
+                  <option value="healthcare">Healthcare / Wellness</option>
+                  <option value="legal">Legal Services</option>
+                  <option value="financial">Financial Services</option>
+                  <option value="property">Property / Estate Agency</option>
+                  <option value="education">Education / Training</option>
+                  <option value="technology">Technology / IT</option>
+                  <option value="creative">Creative / Media / Design</option>
+                  <option value="automotive">Automotive</option>
+                  <option value="logistics">Logistics / Transport</option>
+                  <option value="charity">Charity / Non-profit</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Business Website</label>
+                <input type="url" name="website" class="form-input" placeholder="https://www.yourbusiness.com">
+              </div>
+            </div>
+          </div>
+
+          <!-- Brand Voice -->
+          <div class="form-section">
+            <h3>2. Your Brand Voice & Services</h3>
+            <p class="section-desc">This is how Operion will communicate with your customers. Be specific — the more detail you give, the better the AI responses will be.</p>
+            <div class="form-grid">
+              <div class="form-group form-full">
+                <label class="form-label">Brand Voice *</label>
+                <input type="text" name="brand_voice" class="form-input" placeholder="e.g. Friendly and professional, like a trusted local expert. Warm but efficient." required>
+                <span class="form-hint">Describe how you want to sound to your customers.</span>
+              </div>
+              <div class="form-group form-full">
+                <label class="form-label">Response Persona</label>
+                <input type="text" name="response_persona" class="form-input" placeholder="e.g. The Hadfield Plumbing Team, or your first name">
+                <span class="form-hint">The name responses will be signed off with. Leave blank to use your business name.</span>
+              </div>
+              <div class="form-group form-full">
+                <label class="form-label">Services You Offer *</label>
+                <textarea name="services" class="form-textarea" rows="3" placeholder="e.g. Emergency plumbing, boiler installation, boiler servicing, bathroom fitting, drain unblocking" required></textarea>
+                <span class="form-hint">Separate services with commas.</span>
+              </div>
+              <div class="form-group form-full">
+                <label class="form-label">Operating Hours</label>
+                <input type="text" name="operating_hours" class="form-input" placeholder="e.g. Monday–Friday 8am–6pm, Saturday 9am–1pm. Emergency callouts 24/7.">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Emergency Contact Number</label>
+                <input type="text" name="emergency_contact" class="form-input" placeholder="e.g. 07700 000000">
+                <span class="form-hint">Used in emergency enquiry responses if provided.</span>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Escalation Email</label>
+                <input type="email" name="escalation_email" class="form-input" placeholder="Where to send urgent alerts">
+                <span class="form-hint">Leave blank to use your account email.</span>
+              </div>
+              <div class="form-group form-full">
+                <label class="form-label">Custom Instructions (optional)</label>
+                <textarea name="custom_instructions" class="form-textarea" rows="2" placeholder="Any specific instructions for how Operion should handle your enquiries..."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Email Settings -->
+          <div class="form-section">
+            <h3>3. Email Configuration</h3>
+            <p class="section-desc">Operion sends responses from your own email address using your email server. Your customers see replies coming directly from you.</p>
+            <div class="alert alert-info" style="margin-bottom:1.5rem">
+              <span>💡</span>
+              <span>Gmail users: use an <strong>App Password</strong>, not your main password. Go to myaccount.google.com → Security → App Passwords. Set host to <code style="font-family:var(--font-mono);color:var(--cyan)">smtp.gmail.com</code>, port <code style="font-family:var(--font-mono);color:var(--cyan)">587</code>.</span>
+            </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">SMTP Host *</label>
+                <input type="text" name="smtp_host" class="form-input" placeholder="smtp.gmail.com" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">SMTP Port</label>
+                <input type="number" name="smtp_port" class="form-input" placeholder="587" value="587">
+              </div>
+              <div class="form-group">
+                <label class="form-label">SMTP Username *</label>
+                <input type="email" name="smtp_user" class="form-input" placeholder="your@email.com" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">SMTP Password / App Password *</label>
+                <input type="password" name="smtp_pass" class="form-input" placeholder="Your app password" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">From Email Address</label>
+                <input type="email" name="smtp_from_email" class="form-input" placeholder="enquiries@yourbusiness.com">
+                <span class="form-hint">Leave blank to use SMTP username.</span>
+              </div>
+              <div class="form-group">
+                <label class="form-label">From Display Name</label>
+                <input type="text" name="smtp_from_name" class="form-input" placeholder="Your Business Name">
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQs -->
+          <div class="form-section">
+            <h3>4. Frequently Asked Questions (optional)</h3>
+            <p class="section-desc">Adding FAQs dramatically improves response accuracy. Operion uses these to answer common questions in detail. Add as many as you like.</p>
+            <div id="faq-container"></div>
+            <button type="button" id="add-faq" class="btn btn-ghost btn-sm">+ Add FAQ</button>
+          </div>
+
+          <!-- Consent -->
+          <div class="consent-block">
+            <p style="font-size:0.85rem;font-weight:600;margin-bottom:1rem;color:var(--white)">Before you activate, please confirm:</p>
+            <div class="consent-item">
+              <input type="checkbox" id="consent-terms" required>
+              <label for="consent-terms">I have read and agree to Operion's <a href="legal.html#terms" target="_blank">Terms of Service</a> and <a href="legal.html#privacy" target="_blank">Privacy Policy</a>.</label>
+            </div>
+            <div class="consent-item">
+              <input type="checkbox" id="consent-ai" required>
+              <label for="consent-ai">I have read the <a href="legal.html#ai-disclaimer" target="_blank">AI Disclaimer</a> and understand that AI-generated responses will be sent from my email address in my business name. I accept responsibility for these communications.</label>
+            </div>
+            <div class="consent-item">
+              <input type="checkbox" id="consent-customers" required>
+              <label for="consent-customers">I will inform my customers that AI may be used to handle their enquiries, in accordance with UK GDPR requirements.</label>
+            </div>
+            <div class="consent-item">
+              <input type="checkbox" id="consent-data" required>
+              <label for="consent-data">I confirm that my use of Operion will comply with applicable laws, and that I will not use the platform for any prohibited purposes listed in the <a href="legal.html#acceptable-use" target="_blank">Acceptable Use Policy</a>.</label>
+            </div>
+          </div>
+
+          <div id="onboard-response" style="margin-bottom:1rem"></div>
+
+          <button type="submit" id="onboard-submit" class="btn btn-primary btn-lg" style="width:100%">
+            Activate My Operion Account →
+          </button>
+          <p style="text-align:center;font-size:0.78rem;color:var(--white-faint);margin-top:1rem">
+            By activating, you confirm you have read and agreed to all terms above.<br>
+            Your SMTP credentials are stored securely and used only to send AI-generated responses on your behalf.
+          </p>
+        </form>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="onboard-sidebar">
+        <div class="step-indicator">
+          <div class="step-ind active">
+            <div class="step-ind-num">1</div>
+            <div class="step-ind-text">
+              <h4>Fill in your details</h4>
+              <p>Business info, brand voice, email config</p>
+            </div>
+          </div>
+          <div class="step-ind">
+            <div class="step-ind-num">2</div>
+            <div class="step-ind-text">
+              <h4>Account activated</h4>
+              <p>Operion creates your profile and seeds your KB</p>
+            </div>
+          </div>
+          <div class="step-ind">
+            <div class="step-ind-num">3</div>
+            <div class="step-ind-text">
+              <h4>Welcome email sent</h4>
+              <p>Your Business ID and Dashboard API Key</p>
+            </div>
+          </div>
+          <div class="step-ind">
+            <div class="step-ind-num">4</div>
+            <div class="step-ind-text">
+              <h4>Enquiries handled automatically</h4>
+              <p>From this moment, Operion is live</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom:1rem">
+          <h4 style="font-size:0.88rem;margin-bottom:0.75rem">What Operion does with your data</h4>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="font-size:0.8rem;color:var(--white-dim);display:flex;gap:8px"><span style="color:var(--green)">✓</span>SMTP credentials used only to send responses from your account</div>
+            <div style="font-size:0.8rem;color:var(--white-dim);display:flex;gap:8px"><span style="color:var(--green)">✓</span>No card data stored (Stripe handles all payments)</div>
+            <div style="font-size:0.8rem;color:var(--white-dim);display:flex;gap:8px"><span style="color:var(--green)">✓</span>All data stored within the UK</div>
+            <div style="font-size:0.8rem;color:var(--white-dim);display:flex;gap:8px"><span style="color:var(--green)">✓</span>No data sold to third parties</div>
+            <div style="font-size:0.8rem;color:var(--white-dim);display:flex;gap:8px"><span style="color:var(--green)">✓</span>AI runs on our own hardware — no OpenAI or Google</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h4 style="font-size:0.88rem;margin-bottom:0.5rem">Need help?</h4>
+          <p style="font-size:0.82rem;color:var(--white-dim);margin-bottom:1rem">We offer a one-off onboarding call to walk you through every step.</p>
+          <a href="about.html#contact" class="btn btn-ghost btn-sm" style="width:100%;justify-content:center">Contact Us</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <p>© 2025 Operion Systems Ltd. All rights reserved.</p>
+      <div class="footer-legal-links">
+        <a href="legal.html#privacy">Privacy</a>
+        <a href="legal.html#terms">Terms</a>
+        <a href="legal.html#ai-disclaimer">AI Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

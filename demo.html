@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Request a Demo — Operion Systems</title>
+  <meta name="description" content="See Operion handle real customer enquiries live. Request a 30-minute demonstration tailored to your business.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .demo-hero { padding: 120px 0 60px; text-align: center; }
+    .demo-layout {
+      display: grid;
+      grid-template-columns: 1fr 480px;
+      gap: 4rem;
+      align-items: start;
+      padding-bottom: 6rem;
+    }
+    .demo-form-wrap {
+      background: var(--surface);
+      border: 1px solid var(--cyan);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      box-shadow: 0 0 40px rgba(0,229,255,0.08);
+    }
+    .demo-form-wrap h2 { font-size: 1.3rem; margin-bottom: 0.4rem; }
+    .demo-form-wrap .sub {
+      font-size: 0.88rem;
+      color: var(--white-dim);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .demo-expect { display: flex; flex-direction: column; gap: 2rem; }
+    .demo-expect-item { display: flex; gap: 1.25rem; align-items: flex-start; }
+    .demo-expect-num {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--cyan-glow);
+      border: 1px solid rgba(0,229,255,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono); font-size: 0.75rem;
+      color: var(--cyan); flex-shrink: 0;
+    }
+    .demo-expect-item h4 { font-size: 0.95rem; margin-bottom: 0.3rem; }
+    .demo-expect-item p { font-size: 0.83rem; color: var(--white-dim); line-height: 1.6; }
+    .demo-trust { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
+    .demo-trust-item { display: flex; align-items: center; gap: 0.75rem; font-size: 0.83rem; color: var(--white-dim); }
+    .demo-trust-item .tick { color: var(--cyan); }
+    .demo-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin: 3rem 0;
+    }
+    .demo-stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .demo-stat-value {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 2rem;
+      color: var(--cyan);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .demo-stat-label { font-size: 0.8rem; color: var(--white-dim); }
+    .demo-terminal {
+      background: var(--deep);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--white-dim);
+      line-height: 1.9;
+      margin-top: 2.5rem;
+    }
+    .demo-terminal .t-cyan { color: var(--cyan); }
+    .demo-terminal .t-green { color: var(--green); }
+    .demo-terminal .t-dim { color: var(--white-faint); }
+    @media (max-width: 900px) {
+      .demo-layout { grid-template-columns: 1fr; }
+      .demo-stats { grid-template-columns: 1fr; }
+    }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo">
+    <img src="logo.svg" alt="Operion Systems">
+    OPERION <span class="nav-logo-sys">SYSTEMS</span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="how-it-works.html">How It Works</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="about.html">About</a>
+    <a href="demo.html">Demo</a>
+    <a href="legal.html">Legal</a>
+  </div>
+  <div class="nav-cta">
+    <a href="dashboard.html" class="btn btn-ghost btn-sm">Client Login</a>
+    <a href="get-started.html" class="btn btn-primary btn-sm">Get Started</a>
+  </div>
+  <button class="nav-burger" aria-label="Menu">☰</button>
+</nav>
+
+<!-- ── HERO ─────────────────────────────────────────────────────── -->
+<section class="demo-hero">
+  <div class="container">
+    <div class="eyebrow" style="display:inline-flex;align-items:center;gap:8px;background:var(--cyan-glow);border:1px solid rgba(0,229,255,0.2);border-radius:100px;padding:6px 16px;font-family:var(--font-mono);font-size:0.75rem;color:var(--cyan);letter-spacing:0.08em;margin-bottom:1.5rem;">
+      <span style="width:6px;height:6px;background:var(--cyan);border-radius:50%;animation:pulse-glow 2s ease infinite;display:inline-block;"></span>
+      LIVE DEMONSTRATION
+    </div>
+    <h1 style="max-width:700px;margin:0 auto 1.25rem;">See Operion handle your <em style="font-style:normal;color:var(--cyan);">actual enquiries</em> live</h1>
+    <p style="font-size:1.05rem;color:var(--white-dim);max-width:540px;margin:0 auto;line-height:1.7;">
+      A 30-minute live demonstration using your business type, your services, and real example enquiries. No slides. No sales pitch. Just Operion working.
+    </p>
+    <div class="demo-stats">
+      <div class="demo-stat">
+        <div class="demo-stat-value">4</div>
+        <div class="demo-stat-label">AI models in failsafe chain</div>
+      </div>
+      <div class="demo-stat">
+        <div class="demo-stat-value">&lt;2s</div>
+        <div class="demo-stat-label">Average response generation</div>
+      </div>
+      <div class="demo-stat">
+        <div class="demo-stat-value">24/7</div>
+        <div class="demo-stat-label">Fully autonomous operation</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MAIN LAYOUT ───────────────────────────────────────────────── -->
+<section style="padding-bottom:6rem;">
+  <div class="container">
+    <div class="demo-layout">
+
+      <!-- LEFT: What to expect -->
+      <div>
+        <h2 style="font-size:1.5rem;margin-bottom:2rem;">What happens in the demo</h2>
+        <div class="demo-expect">
+          <div class="demo-expect-item">
+            <div class="demo-expect-num">01</div>
+            <div>
+              <h4>We set up your business profile live</h4>
+              <p>We enter your business name, services, brand voice, and a few FAQs. Takes under 3 minutes. This is exactly what your real onboarding looks like.</p>
+            </div>
+          </div>
+          <div class="demo-expect-item">
+            <div class="demo-expect-num">02</div>
+            <div>
+              <h4>We send real test enquiries</h4>
+              <p>Emergencies, complaints, quote requests, bookings — we fire them in via email and the API. You watch Operion classify, prioritise, and respond to each one in real time.</p>
+            </div>
+          </div>
+          <div class="demo-expect-item">
+            <div class="demo-expect-num">03</div>
+            <div>
+              <h4>We show you the dashboard and HIVE</h4>
+              <p>Live queue visibility. Response quality scoring. Pattern detection. The approval workflow for AI-proposed improvements. Everything you control as the business owner.</p>
+            </div>
+          </div>
+          <div class="demo-expect-item">
+            <div class="demo-expect-num">04</div>
+            <div>
+              <h4>We answer every question honestly</h4>
+              <p>What Operion can do. What it can't. What happens when the AI gets it wrong. How the fallback chain works. No overselling. No pressure.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-terminal">
+          <div class="t-dim">// live demo — your business, real enquiries</div>
+          <div><span class="t-cyan">→</span> IntelligenceEngine.classify()</div>
+          <div>&nbsp;&nbsp;classification: <span class="t-green">emergency</span> | confidence: 0.96</div>
+          <div>&nbsp;&nbsp;kb_results_found: <span class="t-cyan">4</span> | priority: <span class="t-green">1</span></div>
+          <div><span class="t-cyan">→</span> ResponseEngine.generate(llama2)</div>
+          <div>&nbsp;&nbsp;<span class="t-green">✓</span> Response generated — 1,243ms</div>
+          <div>&nbsp;&nbsp;<span class="t-green">✓</span> Rules enforced — 0 violations</div>
+          <div>&nbsp;&nbsp;<span class="t-green">✓</span> Delivered via SMTP</div>
+          <div class="t-dim">// HIVE event written — async</div>
+        </div>
+
+        <div class="demo-trust">
+          <div class="demo-trust-item"><span class="tick">✓</span> No obligation — the demo is completely free</div>
+          <div class="demo-trust-item"><span class="tick">✓</span> Runs over video call or in person</div>
+          <div class="demo-trust-item"><span class="tick">✓</span> Tailored to your business type and sector</div>
+          <div class="demo-trust-item"><span class="tick">✓</span> We respond within one business day to arrange</div>
+          <div class="demo-trust-item"><span class="tick">✓</span> All AI runs on our own hardware — no OpenAI or Google</div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Form -->
+      <div class="demo-form-wrap">
+        <h2>Request Your Demo</h2>
+        <p class="sub">Fill in the form below and we will be in touch within one business day to arrange a time that suits you.</p>
+
+        <div id="demo-response"></div>
+
+        <form id="demo-form" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="demo-name">Your Name *</label>
+            <input type="text" id="demo-name" name="name" class="form-input" placeholder="John Smith" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="demo-email">Email Address *</label>
+            <input type="email" id="demo-email" name="email" class="form-input" placeholder="john@yourbusiness.co.uk" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="demo-phone">Phone Number</label>
+            <input type="tel" id="demo-phone" name="phone" class="form-input" placeholder="07700 000000">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="demo-company">Business / Company Name</label>
+            <input type="text" id="demo-company" name="company" class="form-input" placeholder="Your Business Ltd">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="demo-type">Business Type</label>
+            <select id="demo-type" name="business_type" class="form-input form-select">
+              <option value="">Select your sector</option>
+              <option>Trades (plumber, electrician, builder)</option>
+              <option>Retail / E-commerce</option>
+              <option>Professional Services</option>
+              <option>Hospitality / Food &amp; Beverage</option>
+              <option>Healthcare / Wellness</option>
+              <option>Legal Services</option>
+              <option>Financial Services</option>
+              <option>Property / Estate Agency</option>
+              <option>Education / Training</option>
+              <option>Technology / IT</option>
+              <option>Creative / Media / Design</option>
+              <option>Automotive</option>
+              <option>Logistics / Transport</option>
+              <option>Charity / Non-profit</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="demo-employees">Number of Employees</label>
+            <select id="demo-employees" name="employees" class="form-input form-select">
+              <option value="">Select</option>
+              <option>Just me</option>
+              <option>2–5</option>
+              <option>6–20</option>
+              <option>21–50</option>
+              <option>50+</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="demo-message">Anything you'd like us to know</label>
+            <textarea id="demo-message" name="message" class="form-textarea" rows="3" placeholder="e.g. We get a lot of emergency call-out requests and struggle to respond quickly overnight..."></textarea>
+          </div>
+
+          <button type="submit" id="demo-submit" class="btn btn-primary" style="width:100%;justify-content:center;">
+            Request My Demo →
+          </button>
+          <p style="font-size:0.78rem;color:var(--white-faint);text-align:center;margin-top:1rem;line-height:1.5;">
+            We will never spam you or pass your details to third parties.<br>
+            See our <a href="legal.html" style="color:var(--cyan)">Privacy Policy</a> for full details.
+          </p>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ────────────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="margin-bottom:1rem;display:inline-flex;">
+          <img src="logo.svg" alt="Operion Systems">
+          OPERION <span class="nav-logo-sys">SYSTEMS</span>
+        </a>
+        <p class="footer-desc">A managed AI service designed to handle your customer enquiries automatically — in your voice, from your email address, around the clock.</p>
+      </div>
+      <div class="footer-links">
+        <h4 class="footer-heading">Platform</h4>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="get-started.html">Get Started</a>
+        <a href="dashboard.html">Client Dashboard</a>
+      </div>
+      <div class="footer-links">
+        <h4 class="footer-heading">Company</h4>
+        <a href="about.html">About Operion</a>
+        <a href="demo.html">Request Demo</a>
+        <a href="demo.html">Request Demo</a>
+        <a href="mailto:operionautomation@gmail.com">Contact</a>
+      </div>
+      <div class="footer-links">
+        <h4 class="footer-heading">Legal</h4>
+        <a href="legal.html#ai-policy">AI Policy</a>
+        <a href="legal.html">Legal</a>
+        <a href="legal.html#terms">Terms of Service</a>
+        <a href="legal.html#privacy">Privacy Policy</a>
+        <a href="legal.html#refund">Refund Policy</a>
+        <a href="legal.html#ai-disclaimer">AI Disclaimer</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Operion Systems Ltd. All rights reserved. Operion™ is a trademark of Operion Systems Ltd.</span>
+      <span><a href="legal.html#privacy">Privacy</a> · <a href="legal.html#terms">Terms</a> · <a href="legal.html#ai-policy">AI Policy</a> · <a href="legal.html">Cookies</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

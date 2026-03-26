@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing — Operion Systems Ltd</title>
+  <meta name="description" content="Operion pricing plans from £79/month. Starter, Growth, Scale and Enterprise tiers. All-inclusive managed AI enquiry handling.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .pricing-hero { padding: 120px 0 60px; text-align: center; }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      align-items: start;
+    }
+    .price-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      transition: all var(--transition);
+      position: relative;
+    }
+    .price-card:hover { border-color: var(--border-light); transform: translateY(-2px); }
+    .price-card.featured {
+      border-color: var(--cyan);
+      box-shadow: 0 0 40px rgba(0,229,255,0.12);
+    }
+    .popular-tag {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--cyan);
+      color: var(--black);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 16px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+    .price-tier {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--white-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .price-amount {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 2.8rem;
+      color: var(--white);
+      line-height: 1;
+    }
+    .price-amount sup { font-size: 1.2rem; vertical-align: super; }
+    .price-amount small { font-size: 0.85rem; font-weight: 400; color: var(--white-dim); }
+    .price-rate {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--cyan);
+      margin-top: 4px;
+    }
+    .price-features { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+    .price-feature {
+      display: flex;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: var(--white-dim);
+      line-height: 1.4;
+    }
+    .price-feature-check { color: var(--cyan); flex-shrink: 0; font-size: 0.9rem; }
+    .price-feature-x { color: var(--white-faint); flex-shrink: 0; }
+    .price-divider { height: 1px; background: var(--border); }
+    .compare-table { width: 100%; border-collapse: collapse; margin-top: 3rem; }
+    .compare-table th {
+      text-align: center;
+      padding: 1rem;
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 0.9rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+    .compare-table th:first-child { text-align: left; background: var(--deep); }
+    .compare-table td {
+      text-align: center;
+      padding: 14px 1rem;
+      font-size: 0.85rem;
+      border: 1px solid var(--border);
+      color: var(--white-dim);
+    }
+    .compare-table td:first-child { text-align: left; font-weight: 500; color: var(--white); background: var(--deep); }
+    .compare-table tr:hover td { background: var(--surface-2); }
+    .compare-table tr:hover td:first-child { background: var(--surface); }
+    .check { color: var(--cyan); font-size: 1rem; }
+    .cross { color: var(--white-faint); }
+    .compare-category td {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--white-faint);
+      background: var(--deep) !important;
+      padding: 8px 1rem;
+    }
+    .addons-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .addon-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+    }
+    .addon-price {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: var(--cyan);
+      margin-bottom: 0.5rem;
+    }
+    .addon-card h3 { font-size: 0.95rem; margin-bottom: 0.5rem; }
+    .addon-card p { font-size: 0.82rem; color: var(--white-dim); line-height: 1.6; }
+    @media(max-width:900px){
+      .pricing-grid { grid-template-columns: repeat(2,1fr); }
+      .addons-grid { grid-template-columns: 1fr; }
+    }
+    @media(max-width:500px){
+      .pricing-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo"><img src="logo.svg" alt="Operion Systems">OPERION <span class="nav-logo-sys">SYSTEMS</span></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="how-it-works.html">How It Works</a>
+    <a href="pricing.html" class="active">Pricing</a>
+    <a href="about.html">About</a>
+    <a href="demo.html">Demo</a>
+    <a href="legal.html">Legal</a>
+  </div>
+  <div class="nav-cta">
+    <a href="dashboard.html" class="btn btn-ghost btn-sm">Client Login</a>
+    <a href="get-started.html" class="btn btn-primary btn-sm">Get Started</a>
+  </div>
+  <button class="nav-burger">☰</button>
+</nav>
+
+<div class="pricing-hero">
+  <div class="container">
+    <div class="section-label" style="justify-content:center">Pricing</div>
+    <h1 class="display-2" style="margin-bottom:1rem">One monthly fee. No surprises.</h1>
+    <p style="color:var(--white-dim);max-width:500px;margin:0 auto 1.5rem">No per-enquiry charges. No API costs. No installation fees. Your AI runs on our infrastructure.</p>
+    <div class="alert alert-info" style="max-width:560px;margin:0 auto">
+      <span>💳</span>
+      <span>All plans include a <strong>30-day money-back guarantee</strong>. Cancel any time. <a href="legal.html#refunds">See refund policy.</a></span>
+    </div>
+  </div>
+</div>
+
+<section style="padding:0 0 80px">
+  <div class="container">
+
+    <!-- Pricing Cards -->
+    <div class="pricing-grid" style="margin-bottom:5rem">
+
+      <div class="price-card" data-animate>
+        <div>
+          <div class="price-tier">Tier 1</div>
+          <h2 style="font-size:1.2rem;margin:6px 0">Starter</h2>
+          <div class="price-amount"><sup>£</sup>79<small>/month</small></div>
+          <div class="price-rate">500 enquiries/hour</div>
+        </div>
+        <div class="price-divider"></div>
+        <div class="price-features">
+          <div class="price-feature"><span class="price-feature-check">✓</span>All channels (email, web, API)</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>15 enquiry classification types</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>4-tier AI failsafe chain</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>GUARDIAN security engine</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>Responds in your brand voice</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>Escalation detection & alerts</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>Failure alerts & auto-retry</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>Weekly summary report</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>Stripe billing portal</div>
+          <div class="price-feature"><span class="price-feature-x">—</span><span style="opacity:0.5">HIVE Mind analysis</span></div>
+          <div class="price-feature"><span class="price-feature-x">—</span><span style="opacity:0.5">Dashboard access</span></div>
+        </div>
+        <a href="get-started.html?tier=1" class="btn btn-outline" data-checkout-tier="1">Get Started</a>
+      </div>
+
+      <div class="price-card featured" data-animate class="delay-1">
+        <div class="popular-tag">Most Popular</div>
+        <div>
+          <div class="price-tier">Tier 2</div>
+          <h2 style="font-size:1.2rem;margin:6px 0">Growth</h2>
+          <div class="price-amount"><sup>£</sup>149<small>/month</small></div>
+          <div class="price-rate">2,000 enquiries/hour</div>
+        </div>
+        <div class="price-divider"></div>
+        <div class="price-features">
+          <div class="price-feature"><span class="price-feature-check">✓</span>Everything in Starter</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>HIVE Mind event analysis</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>7 pattern detection types</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>Automation opportunity scanning</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>KB gap identification</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>HIVE intelligence reports</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>Knowledge base search</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>External knowledge ingestion</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>Collective intelligence access</div>
+          <div class="price-feature"><span class="price-feature-x">—</span><span style="opacity:0.5">Analytics overview</span></div>
+          <div class="price-feature"><span class="price-feature-x">—</span><span style="opacity:0.5">Full dashboard</span></div>
+        </div>
+        <a href="get-started.html?tier=2" class="btn btn-primary" data-checkout-tier="2">Get Started</a>
+      </div>
+
+      <div class="price-card" data-animate class="delay-2">
+        <div>
+          <div class="price-tier">Tier 3</div>
+          <h2 style="font-size:1.2rem;margin:6px 0">Scale</h2>
+          <div class="price-amount"><sup>£</sup>249<small>/month</small></div>
+          <div class="price-rate">5,000 enquiries/hour</div>
+        </div>
+        <div class="price-divider"></div>
+        <div class="price-features">
+          <div class="price-feature"><span class="price-feature-check">✓</span>Everything in Growth</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>Full analytics dashboard</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>Response quality scoring</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>AI model usage breakdown</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>Classification trends</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>Enquiry volume by channel</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>Prompt evolution engine</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>Weekly analytics report</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>Avg response time tracking</div>
+          <div class="price-feature"><span class="price-feature-x">—</span><span style="opacity:0.5">KB management</span></div>
+          <div class="price-feature"><span class="price-feature-x">—</span><span style="opacity:0.5">Payment history</span></div>
+        </div>
+        <a href="get-started.html?tier=3" class="btn btn-outline" data-checkout-tier="3">Get Started</a>
+      </div>
+
+      <div class="price-card" data-animate class="delay-3">
+        <div>
+          <div class="price-tier">Tier 4</div>
+          <h2 style="font-size:1.2rem;margin:6px 0">Enterprise</h2>
+          <div class="price-amount"><sup>£</sup>399<small>/month</small></div>
+          <div class="price-rate">Unlimited enquiries/hour</div>
+        </div>
+        <div class="price-divider"></div>
+        <div class="price-features">
+          <div class="price-feature"><span class="price-feature-check">✓</span>Everything in Scale</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>Full enterprise dashboard</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>KB management endpoint</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>Vector store management</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>Queue monitoring</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>Health monitoring slice</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>Full recommendations history</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>Payment history (12 months)</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>Priority support (4hr response)</div>
+          <div class="price-feature"><span class="price-feature-check">✓</span>Marketplace module access</div>
+        </div>
+        <a href="get-started.html?tier=4" class="btn btn-outline" data-checkout-tier="4">Get Started</a>
+      </div>
+
+    </div>
+
+    <!-- Add-ons -->
+    <div style="margin-bottom:5rem">
+      <div class="section-label">Optional Add-Ons</div>
+      <h2 class="display-3" style="margin-bottom:2rem">Professional services, when you need them</h2>
+      <div class="addons-grid">
+        <div class="addon-card">
+          <div class="addon-price">£99 <small style="font-size:0.8rem;color:var(--white-dim);font-weight:400">one-off</small></div>
+          <h3>Onboarding Support Call</h3>
+          <p>45-minute video call to configure your SMTP, build your FAQ list, define brand voice, and ensure your first week runs smoothly.</p>
+        </div>
+        <div class="addon-card">
+          <div class="addon-price">£149 <small style="font-size:0.8rem;color:var(--white-dim);font-weight:400">one-off</small></div>
+          <h3>Knowledge Base Build</h3>
+          <p>We manually build 20–50 KB entries from your existing content — website, FAQs, service descriptions. Better context from day one.</p>
+        </div>
+        <div class="addon-card">
+          <div class="addon-price">£199 <small style="font-size:0.8rem;color:var(--white-dim);font-weight:400">one-off</small></div>
+          <h3>Custom Prompt Tuning</h3>
+          <p>We write and test custom response prompts for your specific business type. Ideal for legal, medical, trades, or specialist sectors.</p>
+        </div>
+        <div class="addon-card">
+          <div class="addon-price">£49 <small style="font-size:0.8rem;color:var(--white-dim);font-weight:400">/month</small></div>
+          <h3>Monthly Management Report</h3>
+          <p>A hand-written monthly review of your system performance, HIVE recommendations, and suggested next steps. Your AI operations review.</p>
+        </div>
+        <div class="addon-card">
+          <div class="addon-price">£149–299 <small style="font-size:0.8rem;color:var(--white-dim);font-weight:400">one-off</small></div>
+          <h3>Integration Setup</h3>
+          <p>Connect Operion to your CRM, booking system, or ticketing platform. Scoped per project. Contact us for a quote.</p>
+        </div>
+        <div class="addon-card" style="background:var(--cyan-glow);border-color:rgba(0,229,255,0.2)">
+          <div class="addon-price" style="color:var(--white)">Talk to us</div>
+          <h3>Something else?</h3>
+          <p>Every business is different. If you need something not listed here, get in touch and we'll work out what's possible.</p>
+          <a href="about.html#contact" class="btn btn-outline btn-sm" style="margin-top:1rem">Contact Us</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparison Table -->
+    <div style="margin-bottom:4rem">
+      <div class="section-label">Full Comparison</div>
+      <h2 class="display-3" style="margin-bottom:2rem">Everything, side by side</h2>
+      <div style="overflow-x:auto">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th style="width:35%">Feature</th>
+              <th>Starter<br><small style="font-weight:400;color:var(--white-dim)">£79</small></th>
+              <th style="border-top:2px solid var(--cyan);border-left:2px solid var(--cyan);border-right:2px solid var(--cyan)">Growth<br><small style="font-weight:400;color:var(--cyan)">£149</small></th>
+              <th>Scale<br><small style="font-weight:400;color:var(--white-dim)">£249</small></th>
+              <th>Enterprise<br><small style="font-weight:400;color:var(--white-dim)">£399</small></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="compare-category"><td colspan="5">Core Processing</td></tr>
+            <tr><td>Enquiry rate limit</td><td>500/hr</td><td style="border-left:2px solid var(--cyan);border-right:2px solid var(--cyan)">2,000/hr</td><td>5,000/hr</td><td>Unlimited</td></tr>
+            <tr><td>Channels (email, web, API, CRM)</td><td><span class="check">✓</span></td><td style="border-left:2px solid var(--cyan);border-right:2px solid var(--cyan)"><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+            <tr><td>15 enquiry classifications</td><td><span class="check">✓</span></td><td style="border-left:2px solid var(--cyan);border-right:2px solid var(--cyan)"><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+            <tr><td>4-tier AI failsafe</td><td><span class="check">✓</span></td><td style="border-left:2px solid var(--cyan);border-right:2px solid var(--cyan)"><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+            <tr><td>GUARDIAN security engine</td><td><span class="check">✓</span></td><td style="border-left:2px solid var(--cyan);border-right:2px solid var(--cyan)"><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+            <tr><td>Escalation alerts</td><td><span class="check">✓</span></td><td style="border-left:2px solid var(--cyan);border-right:2px solid var(--cyan)"><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+            <tr><td>Delivery failure alerts</td><td><span class="check">✓</span></td><td style="border-left:2px solid var(--cyan);border-right:2px solid var(--cyan)"><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+            <tr><td>Auto-retry on failure</td><td><span class="check">✓</span></td><td style="border-left:2px solid var(--cyan);border-right:2px solid var(--cyan)"><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+            <tr class="compare-category"><td colspan="5">Intelligence (HIVE Mind)</td></tr>
+            <tr><td>Pattern recognition (7 types)</td><td><span class="cross">—</span></td><td style="border-left:2px solid var(--cyan);border-right:2px solid var(--cyan)"><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+            <tr><td>Automation opportunity detection</td><td><span class="cross">—</span></td><td style="border-left:2px solid var(--cyan);border-right:2px solid var(--cyan)"><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+            <tr><td>KB gap identification</td><td><span class="cross">—</span></td><td style="border-left:2px solid var(--cyan);border-right:2px solid var(--cyan)"><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+            <tr><td>External knowledge ingestion</td><td><span class="cross">—</span></td><td style="border-left:2px solid var(--cyan);border-right:2px solid var(--cyan)"><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+            <tr><td>Collective intelligence</td><td><span class="cross">—</span></td><td style="border-left:2px solid var(--cyan);border-right:2px solid var(--cyan)"><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+            <tr><td>Prompt evolution engine</td><td><span class="cross">—</span></td><td style="border-left:2px solid var(--cyan);border-right:2px solid var(--cyan)"><span class="cross">—</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+            <tr><td>Response quality scoring</td><td><span class="cross">—</span></td><td style="border-left:2px solid var(--cyan);border-right:2px solid var(--cyan)"><span class="cross">—</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+            <tr class="compare-category"><td colspan="5">Dashboard & Analytics</td></tr>
+            <tr><td>Basic stats (24h, 7d)</td><td><span class="check">✓</span></td><td style="border-left:2px solid var(--cyan);border-right:2px solid var(--cyan)"><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+            <tr><td>HIVE summary view</td><td><span class="cross">—</span></td><td style="border-left:2px solid var(--cyan);border-right:2px solid var(--cyan)"><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+            <tr><td>Full analytics overview</td><td><span class="cross">—</span></td><td style="border-left:2px solid var(--cyan);border-right:2px solid var(--cyan)"><span class="cross">—</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+            <tr><td>Enterprise dashboard</td><td><span class="cross">—</span></td><td style="border-left:2px solid var(--cyan);border-right:2px solid var(--cyan);border-bottom:2px solid var(--cyan)"><span class="cross">—</span></td><td><span class="cross">—</span></td><td><span class="check">✓</span></td></tr>
+            <tr><td>KB management</td><td><span class="cross">—</span></td><td><span class="cross">—</span></td><td><span class="cross">—</span></td><td><span class="check">✓</span></td></tr>
+            <tr><td>Payment history</td><td><span class="cross">—</span></td><td><span class="cross">—</span></td><td><span class="cross">—</span></td><td><span class="check">✓</span></td></tr>
+            <tr class="compare-category"><td colspan="5">Support</td></tr>
+            <tr><td>Email support</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+            <tr><td>Priority support (4hr)</td><td><span class="cross">—</span></td><td><span class="cross">—</span></td><td><span class="cross">—</span></td><td><span class="check">✓</span></td></tr>
+            <tr><td>Weekly report</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div>
+      <div class="section-label">Common Questions</div>
+      <h2 class="display-3" style="margin-bottom:2rem">Pricing FAQ</h2>
+      <div class="grid-2" style="gap:1rem">
+        <div class="card">
+          <h3 style="font-size:0.95rem;margin-bottom:0.5rem">Are there any hidden fees?</h3>
+          <p style="font-size:0.85rem;color:var(--white-dim)">No. Your monthly subscription covers everything. No per-enquiry charges, no API costs, no overage fees. Enquiries above your hourly limit are rate-limited, not charged extra.</p>
+        </div>
+        <div class="card">
+          <h3 style="font-size:0.95rem;margin-bottom:0.5rem">Can I change tier at any time?</h3>
+          <p style="font-size:0.85rem;color:var(--white-dim)">Yes. Upgrades take effect immediately. Downgrades take effect at your next billing cycle. All tier changes are logged in your audit trail.</p>
+        </div>
+        <div class="card">
+          <h3 style="font-size:0.95rem;margin-bottom:0.5rem">What happens if I cancel?</h3>
+          <p style="font-size:0.85rem;color:var(--white-dim)">Your service continues until the end of your paid period. After that, your account is suspended. Your data is retained for 30 days before deletion. You can reactivate at any time.</p>
+        </div>
+        <div class="card">
+          <h3 style="font-size:0.95rem;margin-bottom:0.5rem">Do I need technical knowledge?</h3>
+          <p style="font-size:0.85rem;color:var(--white-dim)">No. You fill in an onboarding form. We do everything else. The only technical requirement is knowing your email server settings — most email providers make this very easy to find.</p>
+        </div>
+        <div class="card">
+          <h3 style="font-size:0.95rem;margin-bottom:0.5rem">Is my data secure?</h3>
+          <p style="font-size:0.85rem;color:var(--white-dim)">All data is processed and stored within the UK. We never sell your data. We don't use external AI providers — all processing is done on our own hardware. See our <a href="legal.html#privacy">Privacy Policy</a>.</p>
+        </div>
+        <div class="card">
+          <h3 style="font-size:0.95rem;margin-bottom:0.5rem">What is the AI Disclaimer about?</h3>
+          <p style="font-size:0.85rem;color:var(--white-dim)">Operion uses AI to generate responses. You remain legally responsible for what is sent from your account. We are transparent about this. Read our full <a href="legal.html#ai-disclaimer">AI Policy</a> before subscribing.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section-sm" style="background:var(--deep);border-top:1px solid var(--border);text-align:center">
+  <div class="container">
+    <h2 class="display-3" style="margin-bottom:1rem">Ready to stop missing enquiries?</h2>
+    <p style="color:var(--white-dim);margin-bottom:2rem">Your first 30 days are covered by our money-back guarantee.</p>
+    <a href="get-started.html" class="btn btn-primary btn-lg">Activate Your Account</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <p>© 2025 Operion Systems Ltd. All rights reserved. Operion™ is a trademark of Operion Systems Ltd.</p>
+      <div class="footer-legal-links">
+        <a href="legal.html#privacy">Privacy</a>
+        <a href="legal.html#terms">Terms</a>
+        <a href="legal.html#ai-disclaimer">AI Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Operion Systems Ltd</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .dash-header {
+      padding: 84px 0 0;
+      background: var(--deep);
+      border-bottom: 1px solid var(--border);
+    }
+    .dash-header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 0;
+    }
+    .dash-tabs {
+      display: flex;
+      gap: 0;
+      margin-top: 1rem;
+    }
+    .dash-tab {
+      padding: 10px 20px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--white-dim);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all var(--transition);
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+    }
+    .dash-tab:hover { color: var(--white); }
+    .dash-tab.active { color: var(--cyan); border-bottom-color: var(--cyan); }
+    .dash-tab[data-tier-required] { opacity: 0.4; cursor: not-allowed; }
+    .dash-tab[data-tier-required]:hover { color: var(--white-dim); }
+
+    .dash-body { padding: 2rem 0 4rem; }
+    .stats-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; margin-bottom: 2rem; }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem 1.5rem;
+    }
+    .stat-card .stat-value { font-size: 1.8rem; }
+
+    .dash-section { display: none; }
+    .dash-section.active { display: block; }
+    .dash-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .dash-panel h3 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .dash-panel h3 .badge { margin-left: auto; }
+    .tier-gate {
+      background: var(--deep);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius-lg);
+      padding: 3rem;
+      text-align: center;
+    }
+    .tier-gate h3 { font-size: 1rem; margin-bottom: 0.5rem; }
+    .tier-gate p { font-size: 0.85rem; color: var(--white-dim); margin-bottom: 1.5rem; }
+    .login-wrap {
+      min-height: calc(100vh - 64px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 1rem;
+    }
+    .login-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 420px;
+    }
+    .login-box h1 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+    .login-box p { font-size: 0.85rem; color: var(--white-dim); margin-bottom: 2rem; }
+    @media(max-width:768px){
+      .stats-grid { grid-template-columns: repeat(2,1fr); }
+      .dash-tabs { overflow-x: auto; }
+    }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo"><img src="logo.svg" alt="Operion Systems">OPERION <span class="nav-logo-sys">SYSTEMS</span></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="legal.html">Legal</a>
+  </div>
+  <div class="nav-cta" id="nav-dash-actions" style="display:none">
+    <span id="dash-tier" style="font-size:0.75rem"></span>
+    <button id="dashboard-logout" class="btn btn-ghost btn-sm">Sign Out</button>
+  </div>
+  <button class="nav-burger">☰</button>
+</nav>
+
+<!-- LOGIN -->
+<div id="dashboard-login" class="login-wrap" style="display:none">
+  <div class="login-box">
+    <div class="nav-logo" style="margin-bottom:1.5rem">
+      <div class="nav-logo-mark"></div>
+      Operion Dashboard
+    </div>
+    <h1>Sign In</h1>
+    <p>Enter the Business ID and API Key from your welcome email.</p>
+    <div id="login-error" style="margin-bottom:1rem"></div>
+    <form id="dashboard-login-form" novalidate>
+      <div class="form-group" style="margin-bottom:1rem">
+        <label class="form-label">Business ID</label>
+        <input type="text" id="login-bid" class="form-input" placeholder="BIZ-XXXXXXXX" required>
+      </div>
+      <div class="form-group" style="margin-bottom:1.5rem">
+        <label class="form-label">Dashboard API Key</label>
+        <input type="password" id="login-key" class="form-input" placeholder="DK-XXXXXX..." required>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%">Sign In →</button>
+    </form>
+    <p style="font-size:0.75rem;color:var(--white-faint);margin-top:1.5rem;text-align:center">
+      Your credentials were sent in your welcome email.<br>
+      Need help? <a href="about.html#contact">Contact us.</a>
+    </p>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard-view" style="display:none">
+
+  <div class="dash-header">
+    <div class="container">
+      <div class="dash-header-inner">
+        <div>
+          <div class="section-label">Operion Dashboard</div>
+          <h1 id="dash-business-name" class="display-3" style="margin-bottom:0">Loading...</h1>
+        </div>
+        <div style="display:flex;gap:1rem;align-items:center">
+          <span id="dash-tier"></span>
+          <button id="dashboard-logout" class="btn btn-ghost btn-sm">Sign Out</button>
+        </div>
+      </div>
+      <div class="dash-tabs">
+        <button class="dash-tab active" data-tab="overview">Overview</button>
+        <button class="dash-tab" data-tab="hive" id="tab-hive">HIVE Mind</button>
+        <button class="dash-tab" data-tab="analytics" id="tab-analytics">Analytics</button>
+        <button class="dash-tab" data-tab="enterprise" id="tab-enterprise">Enterprise</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="dash-body">
+    <div class="container">
+
+      <!-- OVERVIEW TAB -->
+      <div class="dash-section active" id="section-overview">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value" id="stat-enq-24h">—</div>
+            <div class="stat-label">Enquiries 24h</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-enq-7d">—</div>
+            <div class="stat-label">Enquiries 7 days</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-responded">—</div>
+            <div class="stat-label">Responded 7d</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" style="color:var(--green)" id="stat-response-rate">—</div>
+            <div class="stat-label">Response Rate</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" style="color:var(--amber)" id="stat-escalated">—</div>
+            <div class="stat-label">Escalated</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" style="color:var(--red)" id="stat-failed">—</div>
+            <div class="stat-label">Failed</div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="dash-panel">
+            <h3>⚠ Unresolved Alerts</h3>
+            <div id="dash-alerts"><div class="spinner"></div></div>
+          </div>
+          <div class="dash-panel">
+            <h3>ℹ Account Status</h3>
+            <div style="display:flex;flex-direction:column;gap:10px;font-size:0.85rem">
+              <div style="display:flex;justify-content:space-between">
+                <span style="color:var(--white-dim)">Status</span>
+                <span class="badge badge-green">Active</span>
+              </div>
+              <div style="display:flex;justify-content:space-between">
+                <span style="color:var(--white-dim)">Tier</span>
+                <span id="dash-tier-inline" style="color:var(--cyan)">—</span>
+              </div>
+              <div style="display:flex;justify-content:space-between">
+                <span style="color:var(--white-dim)">Tier Since</span>
+                <span id="dash-tier-since" style="color:var(--white-dim);font-size:0.8rem">—</span>
+              </div>
+              <div style="border-top:1px solid var(--border);padding-top:10px;margin-top:2px">
+                <a href="legal.html#ai-disclaimer" style="font-size:0.78rem;color:var(--white-faint)">🤖 AI Disclaimer applies to all responses sent from your account</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HIVE TAB -->
+      <div class="dash-section" id="section-hive">
+        <div id="dash-hive">
+          <div class="tier-gate" id="hive-gate">
+            <h3>HIVE Mind Intelligence</h3>
+            <p>Pattern detection, automation opportunities, and learning signals. Available on Growth (£149/month) and above.</p>
+            <a href="pricing.html" class="btn btn-outline">View Upgrade Options</a>
+          </div>
+          <div id="hive-content" style="display:none">
+            <div class="stats-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:2rem">
+              <div class="stat-card">
+                <div class="stat-value" id="hive-patterns">—</div>
+                <div class="stat-label">Patterns (30d)</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-value" style="color:var(--amber)" id="hive-pending-recs">—</div>
+                <div class="stat-label">Pending Approvals</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-value" style="color:var(--green)">✓</div>
+                <div class="stat-label">Learning Active</div>
+              </div>
+            </div>
+            <div class="dash-panel">
+              <h3>🧠 Detected Patterns</h3>
+              <div id="hive-pattern-list"></div>
+            </div>
+            <div class="alert alert-info">
+              <span>🔒</span>
+              <span>All HIVE Mind recommendations require your approval before activation. Nothing changes in your system without your explicit sign-off. Review recommendations via your Admin Portal.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ANALYTICS TAB -->
+      <div class="dash-section" id="section-analytics">
+        <div id="dash-analytics">
+          <div class="tier-gate" id="analytics-gate">
+            <h3>Analytics Overview</h3>
+            <p>Response quality scoring, classification breakdown, AI model usage, and performance trends. Available on Scale (£249/month) and above.</p>
+            <a href="pricing.html" class="btn btn-outline">View Upgrade Options</a>
+          </div>
+          <div id="analytics-content" style="display:none">
+            <div class="stats-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:2rem">
+              <div class="stat-card">
+                <div class="stat-value" style="color:var(--green)" id="analytics-quality">—</div>
+                <div class="stat-label">Avg Response Quality</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-value" id="analytics-response-time">—</div>
+                <div class="stat-label">Avg Response Time</div>
+              </div>
+            </div>
+            <div class="grid-2">
+              <div class="dash-panel">
+                <h3>📊 Enquiry Classification Breakdown (7d)</h3>
+                <div id="analytics-classifications"></div>
+              </div>
+              <div class="dash-panel">
+                <h3>🤖 AI Model Usage (7d)</h3>
+                <div id="analytics-models"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ENTERPRISE TAB -->
+      <div class="dash-section" id="section-enterprise">
+        <div id="dash-enterprise">
+          <div class="tier-gate" id="enterprise-gate">
+            <h3>Enterprise Dashboard</h3>
+            <p>Full system visibility — KB management, queue monitoring, health metrics, payment history, and all recommendations. Available on Enterprise (£399/month).</p>
+            <a href="pricing.html" class="btn btn-outline">View Upgrade Options</a>
+          </div>
+          <div id="enterprise-content" style="display:none">
+            <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:2rem">
+              <div class="stat-card">
+                <div class="stat-value" id="ent-kb-count">—</div>
+                <div class="stat-label">KB Entries</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-value" id="ent-vector-count">—</div>
+                <div class="stat-label">Vector Entries</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-value" style="color:var(--amber)" id="ent-queue">—</div>
+                <div class="stat-label">Queue Pending</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-value" style="color:var(--green)" id="ent-health">—</div>
+                <div class="stat-label">System Health</div>
+              </div>
+            </div>
+            <div class="dash-panel">
+              <h3>💳 Payment History (12 months)</h3>
+              <div id="ent-payments"><p class="text-dim" style="font-size:0.85rem">No payment history yet.</p></div>
+            </div>
+            <div class="alert alert-info">
+              <span>🔒</span>
+              <span>This dashboard is strictly <strong>read-only</strong>. It displays your data. It never writes to or modifies your Operion configuration. All changes require approval via your Admin Portal.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div id="dashboard-content"></div>
+
+<footer class="footer" style="margin-top:auto">
+  <div class="container">
+    <div class="footer-bottom">
+      <p>© 2025 Operion Systems Ltd — Dashboard is read-only. AI responses are subject to our <a href="legal.html#ai-disclaimer">AI Disclaimer</a>.</p>
+      <div class="footer-legal-links">
+        <a href="legal.html#privacy">Privacy</a>
+        <a href="legal.html#terms">Terms</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Tab switching
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.dash-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.dash-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.dash-section').forEach(s => s.classList.remove('active'));
+      tab.classList.add('active');
+      const section = document.getElementById('section-' + tab.dataset.tab);
+      if (section) section.classList.add('active');
+    });
+  });
+
+  // Show tier-gated content on dashboard load
+  window.addEventListener('operion:dashboard:loaded', (e) => {
+    const tier = e.detail?.tier || 1;
+    const showSection = (contentId, gateId, minTier) => {
+      const content = document.getElementById(contentId);
+      const gate = document.getElementById(gateId);
+      if (tier >= minTier) {
+        if (content) content.style.display = 'block';
+        if (gate) gate.style.display = 'none';
+      }
+    };
+    showSection('hive-content', 'hive-gate', 2);
+    showSection('analytics-content', 'analytics-gate', 3);
+    showSection('enterprise-content', 'enterprise-gate', 4);
+    const navActions = document.getElementById('nav-dash-actions');
+    if (navActions) navActions.style.display = 'flex';
+    const tierInline = document.getElementById('dash-tier-inline');
+    if (tierInline) tierInline.textContent = `Tier ${tier}`;
+  });
+});
+</script>
+<script src="app.js"></script>
+</body>
+</html>
