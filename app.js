@@ -401,3 +401,4 @@ async function initDashboard() {
         setEl('#ent-queue', e.queue_pending ?? '—');
         setEl('#ent-health', (d.enterprise?.system_health_score ?? '—') + (typeof d.enterprise?.system_health_score === 'number' ? '/100' : ''));
         const payEl = $('#ent-pay
+                        }
