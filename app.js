@@ -400,5 +400,4 @@ async function initDashboard() {
         setEl('#ent-vector-count', e.vector_entries ?? '—');
         setEl('#ent-queue', e.queue_pending ?? '—');
         setEl('#ent-health', (d.enterprise?.system_health_score ?? '—') + (typeof d.enterprise?.system_health_score === 'number' ? '/100' : ''));
-        const payEl = $('#ent-pay
-                        }
+        const payEl = $('#ent-pay;
