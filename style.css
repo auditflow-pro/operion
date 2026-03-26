@@ -516,3 +516,23 @@ h1, h2, h3, h4 {
   font-family: var(--font-mono);
   font-size: 0.9rem;
 }
+/* ── REQUEST DEMO INTEGRATION ONLY ──────────────────────────── */
+#request-demo {
+  /* uses existing .section and .container-narrow padding */
+}
+
+#request-demo form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* spacing between form-groups handled by .form-group */
+}
+
+#request-demo button[type="submit"] {
+  /* uses existing .btn and .btn-primary styles */
+  align-self: flex-start; /* keep button left-aligned */
+}
+
+#request-demo #formResponse {
+  display: none; /* hidden by default, will show on submit */
+  /* uses existing .alert and .alert-info styling */
+}
