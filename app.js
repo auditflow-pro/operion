@@ -5,6 +5,7 @@
 // ================================================================
 
 // ── CONFIGURATION ───────────────────────────────────────────────
+// Replace these values with your actual details before going live.
 const OPERION = {
   BASE_URL: 'https://nonrhymed-elmer-chrysocarpous.ngrok-free.dev',
   SECRET: 'Operion-2026',
@@ -35,9 +36,9 @@ const OPERION = {
   },
 
   TIERS: {
-    1: { name: 'Starter', price: 79, rate: '500 enquiries/hr' },
-    2: { name: 'Growth', price: 149, rate: '2,000 enquiries/hr' },
-    3: { name: 'Scale', price: 249, rate: '5,000 enquiries/hr' },
+    1: { name: 'Starter',    price: 79,  rate: '500 enquiries/hr' },
+    2: { name: 'Growth',     price: 149, rate: '2,000 enquiries/hr' },
+    3: { name: 'Scale',      price: 249, rate: '5,000 enquiries/hr' },
     4: { name: 'Enterprise', price: 399, rate: 'Unlimited' },
   }
 };
@@ -82,11 +83,6 @@ function setLoading(btn, loading, text = '') {
   }
 }
 
-function setEl(selector, value) {
-  const el = $(selector);
-  if (el) el.textContent = value;
-}
-
 // ── NAVIGATION ───────────────────────────────────────────────────
 function initNav() {
   const burger = $('.nav-burger');
@@ -94,14 +90,12 @@ function initNav() {
   if (burger && links) {
     burger.addEventListener('click', () => links.classList.toggle('open'));
   }
-
   const path = window.location.pathname;
   $$('.nav-links a').forEach(a => {
     if (a.getAttribute('href') === path || (path === '/' && a.getAttribute('href') === 'index.html')) {
       a.classList.add('active');
     }
   });
-
   window.addEventListener('scroll', () => {
     const nav = $('.nav');
     if (nav) nav.classList.toggle('scrolled', window.scrollY > 20);
@@ -143,6 +137,16 @@ async function initStripe() {
       window.location.href = OPERION.STRIPE.BILLING_PORTAL;
     });
   });
+}
+
+// ── ONBOARDING FORM (stub) ───────────────────────────────────────
+function initOnboardingForm() {
+  console.log('initOnboardingForm stub called');
+}
+
+// ── DEMO REQUEST FORM (stub) ─────────────────────────────────────
+function initDemoForm() {
+  console.log('initDemoForm stub called');
 }
 
 // ── DASHBOARD ────────────────────────────────────────────────────
@@ -191,31 +195,66 @@ async function initDashboard() {
     if (nameEl) nameEl.textContent = d.business_name || '';
     if (tierEl) tierEl.innerHTML = `<span class="badge badge-cyan">${tierName}</span>`;
 
-    // Enterprise Section — fully closed
-    const enterpriseSection = $('#dash-enterprise');
-    if (enterpriseSection) {
-      enterpriseSection.style.display = tier >= 4 ? 'block' : 'none';
-      if (tier >= 4 && d.enterprise) {
-        const e = d.enterprise;
-        setEl('#ent-kb-count', e.kb_entries ?? '—');
-        setEl('#ent-vector-count', e.vector_entries ?? '—');
-        setEl('#ent-queue', e.queue_pending ?? '—');
-        setEl('#ent-health', (d.enterprise?.system_health_score ?? '—') + (typeof d.enterprise?.system_health_score === 'number' ? '/100' : ''));
-        const payEl = $('#ent-payments');
-        if (payEl && e.payment_history?.length) {
-          payEl.innerHTML = e.payment_history.slice().reverse().map(p => `
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">
-              <span style="font-size:0.82rem;color:var(--white-dim)">${new Date(p.date).toLocaleDateString('en-GB')}</span>
-              <span class="badge badge-${p.status==='succeeded'?'green':'red'}">${p.status}</span>
-              <span class="text-mono" style="color:var(--cyan)">£${p.amount}</span>
-            </div>`).join('');
-        }
+    if (d.stats) {
+      const s = d.stats;
+      setEl('#stat-enq-24h', s.enquiries_24h ?? '—');
+      setEl('#stat-enq-7d', s.enquiries_7d ?? '—');
+      setEl('#stat-responded', s.responded_7d ?? '—');
+      setEl('#stat-failed', s.failed_7d ?? '—');
+      setEl('#stat-escalated', s.escalated_7d ?? '—');
+      setEl('#stat-response-rate', s.response_rate_7d != null ? s.response_rate_7d + '%' : '—');
+    }
+
+    const alertsEl = $('#dash-alerts');
+    if (alertsEl && d.recent_alerts) {
+      if (d.recent_alerts.length === 0) {
+        alertsEl.innerHTML = '<p class="text-dim" style="font-size:0.85rem">No unresolved alerts</p>';
+      } else {
+        alertsEl.innerHTML = d.recent_alerts.map(a => `
+          <div class="alert alert-info" style="margin-bottom:8px">
+            <span class="text-mono" style="font-size:0.72rem;color:var(--cyan)">[${a.type.replace(/_/g,'·')}]</span>
+            <span>${a.message}</span>
+          </div>`).join('');
       }
     }
   }
+
+  function setEl(selector, value) {
+    const el = $(selector);
+    if (el) el.textContent = value;
+  }
+
+  if (loginForm) {
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = $('#login-bid')?.value?.trim();
+      const key = $('#login-key')?.value?.trim();
+      if (!id || !key) return;
+      const btn = loginForm.querySelector('button[type="submit"]');
+      setLoading(btn, true, 'Signing in...');
+      await loadDashboard(id, key);
+      setLoading(btn, false);
+    });
+  }
+
+  const logoutBtn = $('#dashboard-logout');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+      localStorage.removeItem('operion_biz_id');
+      localStorage.removeItem('operion_api_key');
+      if (loginForm) loginForm.style.display = 'block';
+      if (dashView) dashView.style.display = 'none';
+    });
+  }
+
+  if (bizId && apiKey) {
+    await loadDashboard(bizId, apiKey);
+  } else if (loginForm) {
+    loginForm.style.display = 'block';
+  }
 }
 
-// ── INIT ────────────────────────────────────────────────────────
+// ── INIT ─────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   initNav();
   initStripe();
