@@ -5,7 +5,6 @@
 // ================================================================
 
 // ── CONFIGURATION ───────────────────────────────────────────────
-// Replace these values with your actual details before going live.
 const OPERION = {
   BASE_URL: 'https://nonrhymed-elmer-chrysocarpous.ngrok-free.dev',
   SECRET: 'Operion-2026',
@@ -31,14 +30,14 @@ const OPERION = {
       TIER_4: 'price_TIER4_ID',
     },
     BILLING_PORTAL: 'https://billing.stripe.com/p/login/YOUR_PORTAL_LINK',
-    SUCCESS_URL:    '/get-started?paid=true',
-    CANCEL_URL:     '/pricing',
+    SUCCESS_URL: '/get-started?paid=true',
+    CANCEL_URL: '/pricing',
   },
 
   TIERS: {
-    1: { name: 'Starter',    price: 79,  rate: '500 enquiries/hr' },
-    2: { name: 'Growth',     price: 149, rate: '2,000 enquiries/hr' },
-    3: { name: 'Scale',      price: 249, rate: '5,000 enquiries/hr' },
+    1: { name: 'Starter', price: 79, rate: '500 enquiries/hr' },
+    2: { name: 'Growth', price: 149, rate: '2,000 enquiries/hr' },
+    3: { name: 'Scale', price: 249, rate: '5,000 enquiries/hr' },
     4: { name: 'Enterprise', price: 399, rate: 'Unlimited' },
   }
 };
@@ -90,12 +89,14 @@ function initNav() {
   if (burger && links) {
     burger.addEventListener('click', () => links.classList.toggle('open'));
   }
+
   const path = window.location.pathname;
   $$('.nav-links a').forEach(a => {
     if (a.getAttribute('href') === path || (path === '/' && a.getAttribute('href') === 'index.html')) {
       a.classList.add('active');
     }
   });
+
   window.addEventListener('scroll', () => {
     const nav = $('.nav');
     if (nav) nav.classList.toggle('scrolled', window.scrollY > 20);
@@ -374,7 +375,7 @@ async function initDashboard() {
       }
     }
 
-    // Enterprise (Tier 4)
+    // Enterprise Tier 4 — fully closed braces
     const enterpriseSection = $('#dash-enterprise');
     if (enterpriseSection) {
       enterpriseSection.style.display = tier >= 4 ? 'block' : 'none';
@@ -391,36 +392,4 @@ async function initDashboard() {
               <span style="font-size:0.82rem;color:var(--white-dim)">${new Date(p.date).toLocaleDateString('en-GB')}</span>
               <span class="badge badge-${p.status==='succeeded'?'green':'red'}">${p.status}</span>
               <span class="text-mono" style="color:var(--cyan)">£${p.amount}</span>
-            </div>`).join('');
-        }
-      }
-    }
-  }
-
-  if (bizId && apiKey) loadDashboard(bizId, apiKey);
-
-  if (loginForm) {
-    loginForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const id = $('#login-biz-id')?.value?.trim();
-      const key = $('#login-api-key')?.value?.trim();
-      if (!id || !key) return;
-      loadDashboard(id, key);
-    });
-  }
-}
-
-// ── HELPERS ─────────────────────────────────────────────────────
-function setEl(selector, value) {
-  const el = $(selector);
-  if (el) el.textContent = value;
-}
-
-// ── INIT ────────────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
-  initNav();
-  initStripe();
-  initOnboardingForm();
-  initDemoForm();
-  initDashboard();
-});
+            </div>`).
