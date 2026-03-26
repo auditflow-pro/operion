@@ -392,3 +392,35 @@ async function initDashboard() {
               <span class="badge badge-${p.status==='succeeded'?'green':'red'}">${p.status}</span>
               <span class="text-mono" style="color:var(--cyan)">£${p.amount}</span>
             </div>`).join('');
+        }
+      }
+    }
+  }
+
+  if (bizId && apiKey) loadDashboard(bizId, apiKey);
+
+  if (loginForm) {
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const id = $('#login-biz-id')?.value?.trim();
+      const key = $('#login-api-key')?.value?.trim();
+      if (!id || !key) return;
+      loadDashboard(id, key);
+    });
+  }
+}
+
+// ── HELPERS ─────────────────────────────────────────────────────
+function setEl(selector, value) {
+  const el = $(selector);
+  if (el) el.textContent = value;
+}
+
+// ── INIT ────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  initNav();
+  initStripe();
+  initOnboardingForm();
+  initDemoForm();
+  initDashboard();
+});
